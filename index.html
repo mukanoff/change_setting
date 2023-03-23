@@ -1,0 +1,285 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Настройки</title>
+    <style>
+        body {
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .hint {
+            color: var(--tg-theme-hint-color);
+        }
+
+        .link {
+            color: var(--tg-theme-link-color);
+        }
+
+        .button {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            font-size: 18px;
+        }
+
+            .button:not(:last-child) {
+                margin-bottom: 20px
+            }
+
+        usercard {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Настройки</h1>
+
+    <div id="dictionary"></div>
+
+    <button name="add" id="add">Добавить</button>
+    <button name="auto" id="auto">auto</button>
+
+    <script>
+
+        let tg = window.Telegram.WebApp;
+
+        tg.expand();
+
+        tg.MainButton.text = "Changed Text";
+        tg.MainButton.setText("Changed Text1");
+        tg.MainButton.textColor = "#F55353";
+        tg.MainButton.color = "#143F6B";
+        tg.MainButton.setParams({ "color": "#143F6B" });
+
+        let btn = document.getElementById("btn");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const dictionary = JSON.parse(urlParams.get('param1'));
+        var symbols = ["symbol1", "symbol2", "symbol3", "HOOKUSDT", "MAGICUSDT", "COTIUSDT", "BANDUSDT", "DARUSDT", "IMXUSDT", "FTMUSDT"]
+        var trend_dic = ['BUY', 'SELL', 'REVERS']
+        var curent_setting = 1
+       
+        for (var word in dictionary) {
+            let form = document.createElement("form");
+            let inputSymbol = document.createElement("select",);
+            let inputQuantity = document.createElement("input");
+            let inputAditional = document.createElement("input");
+            let inputTake = document.createElement("input");
+            let inputStop = document.createElement("input");
+            let inputTrend = document.createElement("select");
+            let buttonSubmit = document.createElement("button");
+
+            form.setAttribute("id", "form" + curent_setting);
+
+            for (var item_symbol in symbols) {
+                var option_symbol = document.createElement("option");
+                if (symbols[item_symbol] === word) {
+                    option_symbol.selected = true
+                }
+                option_symbol.value = symbols[item_symbol];
+                option_symbol.text = symbols[item_symbol];
+                inputSymbol.appendChild(option_symbol);
+            }
+
+            for (var item_trend in trend_dic) {
+                var option_trend = document.createElement("option");
+                if (trend_dic[item_trend] === dictionary[word]['trend']) {
+                    option_trend.selected = true
+                }
+                option_trend.value = trend_dic[item_trend];
+                option_trend.text = trend_dic[item_trend];
+                inputTrend.appendChild(option_trend);
+            }
+
+            inputSymbol.setAttribute("name", curent_setting);
+            inputTrend.setAttribute("name", curent_setting);
+            inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
+            inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
+                
+            inputQuantity.setAttribute("type", "number");
+            inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
+            inputQuantity.setAttribute("name", "Quantity");
+            inputQuantity.setAttribute("value", dictionary[word]['quantity']);
+            inputQuantity.setAttribute("maxlength", "5");
+            inputQuantity.setAttribute("width", "5");
+
+            inputAditional.setAttribute("type", "number");
+            inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
+            inputAditional.setAttribute("name", "Aditional");
+            inputAditional.setAttribute("value", dictionary[word]['addition'])
+            inputAditional.setAttribute("maxlength", 4);
+
+            inputTake.setAttribute("type", "number");
+            inputTake.setAttribute("id", "form" + curent_setting + "-take");
+            inputTake.setAttribute("name", "Take");
+            inputTake.setAttribute("value", dictionary[word]['take'])
+            inputTake.setAttribute("maxlength", 4);
+
+            inputStop.setAttribute("type", "number");
+            inputStop.setAttribute("id", "form" + curent_setting + "-stop");
+            inputStop.setAttribute("name", "Stop");
+            inputStop.setAttribute("value", dictionary[word]['stop'])
+            inputStop.setAttribute("maxlength", 4);
+
+            buttonSubmit.setAttribute("id", curent_setting);
+            buttonSubmit.innerHTML = "Удалить";
+            buttonSubmit.setAttribute("id", "form." + word);
+
+            buttonSubmit.onclick = function (e) {
+                e.preventDefault();
+                const form = e.target.closest('form');
+                form.remove();
+                curent_setting = curent_setting - 1 
+            }
+
+            form.appendChild(inputSymbol);
+            form.appendChild(inputQuantity);
+            form.appendChild(inputAditional);
+            form.appendChild(inputTake);
+            form.appendChild(inputStop);
+            form.appendChild(inputTrend);
+            form.appendChild(buttonSubmit);
+            document.body.appendChild(form);
+            curent_setting = curent_setting + 1
+        }
+
+        add.onclick = function () {
+            let form = document.createElement("form");
+            let inputSymbol = document.createElement("select",);
+            let inputQuantity = document.createElement("input");
+            let inputAditional = document.createElement("input");
+            let inputTake = document.createElement("input");
+            let inputStop = document.createElement("input");
+            let inputTrend = document.createElement("select");
+            let buttonSubmit = document.createElement("button");
+
+            form.setAttribute("id", "form" + curent_setting);
+
+            for (var item_symbol in symbols) {
+                var option_symbol = document.createElement("option");
+                if (symbols[item_symbol] === word) {
+                    option_symbol.selected = true
+                }
+                option_symbol.value = symbols[item_symbol];
+                option_symbol.text = symbols[item_symbol];
+                inputSymbol.appendChild(option_symbol);
+            }
+
+            for (var item_trend in trend_dic) {
+                var option_trend = document.createElement("option");    
+                option_trend.selected = true;
+                option_trend.value = trend_dic[item_trend];
+                option_trend.text = trend_dic[item_trend];
+                inputTrend.appendChild(option_trend);
+            }
+
+            inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
+            inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
+
+            inputQuantity.setAttribute("type", "number");
+            inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
+            inputQuantity.setAttribute("name", "Quantity");
+            inputQuantity.setAttribute("maxlength", "5");
+            inputQuantity.setAttribute("width", "5");
+
+            inputAditional.setAttribute("type", "number");
+            inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
+            inputAditional.setAttribute("name", "Aditional");
+            inputAditional.setAttribute("maxlength", 4);
+
+            inputTake.setAttribute("type", "number");
+            inputTake.setAttribute("id", "form" + curent_setting + "-take");
+            inputTake.setAttribute("name", "Take");
+            inputTake.setAttribute("maxlength", 4);
+
+            inputStop.setAttribute("type", "number");
+            inputStop.setAttribute("id", "form" + curent_setting + "-stop");
+            inputStop.setAttribute("name", "Stop");
+            inputStop.setAttribute("maxlength", 4);
+
+            buttonSubmit.setAttribute("id", curent_setting);
+            buttonSubmit.innerHTML = "Удалить";
+            buttonSubmit.setAttribute("id", "form." + word);
+
+            buttonSubmit.onclick = function (e) {
+                e.preventDefault();
+                const form = e.target.closest('form');
+                form.remove();
+                curent_setting = curent_setting - 1
+            }
+
+            form.appendChild(inputSymbol);
+            form.appendChild(inputQuantity);
+            form.appendChild(inputAditional);
+            form.appendChild(inputTake);
+            form.appendChild(inputStop);
+            form.appendChild(inputTrend);
+            form.appendChild(buttonSubmit);
+            document.body.appendChild(form);
+            curent_setting = curent_setting + 1
+        }
+
+        auto.onclick = function () {
+            // Получаем все формы на странице
+            const forms = document.querySelectorAll('form');
+            // Создаем пустой объект для хранения данных
+            const data = {};
+            // Проходимся по каждой форме
+            forms.forEach(form => {
+                // Получаем все input в текущей форме
+                const set = form.id;
+                const symbol = document.getElementById(set + "-symbol").value
+                const quantity = document.getElementById(set + "-quantity").value
+                const additional = document.getElementById(set + "-aditional").value
+                const take = document.getElementById(set + "-take").value
+                const stop = document.getElementById(set + "-stop").value
+                const trend = document.getElementById(set + "-trend").value
+                data[symbol] = {
+                    "quantity": quantity,
+                    "additional": additional,
+                    "take": take,
+                    "stop": stop,
+                    "trend": trend
+                };  
+            });
+            // Выводим данные в консоль для проверки
+            console.log(data);
+        }
+
+        Telegram.WebApp.onEvent('mainButtonClicked', function () {
+            const forms = document.querySelectorAll('form');
+            // Создаем пустой объект для хранения данных
+            const data = {};
+            // Проходимся по каждой форме
+            forms.forEach(form => {
+                // Получаем все input в текущей форме
+                const set = form.id;
+                const symbol = document.getElementById(set + "-symbol").value
+                const quantity = document.getElementById(set + "-quantity").value
+                const additional = document.getElementById(set + "-aditional").value
+                const take = document.getElementById(set + "-take").value
+                const stop = document.getElementById(set + "-stop").value
+                const trend = document.getElementById(set + "-trend").value
+                data[symbol] = {
+                    "quantity": quantity,
+                    "additional": additional,
+                    "take": take,
+                    "stop": stop,
+                    "trend": trend
+                };
+            });
+            tg.sendData(data);
+
+        });
+
+    </script>
+</body>
+</html>
+
+
