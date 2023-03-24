@@ -248,8 +248,7 @@
                     "trend": trend
                 };  
             });
-            // Выводим данные в консоль для проверки
-            console.log(data);
+
         }
 
         Telegram.WebApp.onEvent('mainButtonClicked', function () {
@@ -274,7 +273,7 @@
                     "trend": trend
                 };
             });
-            tg.sendData(data);
+            tg.sendData("Типа что-то получилось");
 
         });
 
