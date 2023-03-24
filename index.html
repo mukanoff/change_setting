@@ -51,8 +51,8 @@
 
         tg.expand();
 
-        tg.MainButton.text = "Changed Text";
-        tg.MainButton.setText("Changed Text1");
+        tg.MainButton.text = "Отправить настройки";
+        //tg.MainButton.setText("Changed Text1");
         tg.MainButton.textColor = "#F55353";
         tg.MainButton.color = "#143F6B";
         tg.MainButton.setParams({ "color": "#143F6B" });
@@ -163,17 +163,13 @@
 
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
-                if (symbols[item_symbol] === word) {
-                    option_symbol.selected = true
-                }
                 option_symbol.value = symbols[item_symbol];
                 option_symbol.text = symbols[item_symbol];
                 inputSymbol.appendChild(option_symbol);
             }
 
             for (var item_trend in trend_dic) {
-                var option_trend = document.createElement("option");    
-                option_trend.selected = true;
+                var option_trend = document.createElement("option"); 
                 option_trend.value = trend_dic[item_trend];
                 option_trend.text = trend_dic[item_trend];
                 inputTrend.appendChild(option_trend);
