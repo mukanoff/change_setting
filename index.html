@@ -36,7 +36,7 @@
             text-align: center;
         }
 
-        .text-field__input {
+        .input {
             display: block;
             width: 100%;
             height: calc(2.25rem + 2px);
@@ -51,7 +51,7 @@
             border: 1px solid #bdbdbd;
             border-radius: 0.25rem;
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
+        }
     </style>
 </head>
 <body>
@@ -157,30 +157,29 @@
             inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
             inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
                 
-            inputQuantity.setAttribute("type", "number");
+            inputQuantity.setAttribute("type", "text");
             inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             inputQuantity.setAttribute("value", dictionary[word]['quantity']);
-            inputQuantity.style.width = "5";
-            inputQuantity.style.length = "6";
-
-            inputAditional.setAttribute("type", "number");
+            inputQuantity.setAttribute("size", "3");
+            
+            inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             inputAditional.setAttribute("value", dictionary[word]['addition'])
-            inputAditional.setAttribute("maxlength", 4);
+            inputAditional.setAttribute("size", "3");
 
             inputTake.setAttribute("type", "number");
             inputTake.setAttribute("id", "form" + curent_setting + "-take");
             inputTake.setAttribute("name", "Take");
             inputTake.setAttribute("value", dictionary[word]['take'])
-            inputTake.setAttribute("maxlength", 4);
+            inputTake..setAttribute("size", "3");
 
             inputStop.setAttribute("type", "number");
             inputStop.setAttribute("id", "form" + curent_setting + "-stop");
             inputStop.setAttribute("name", "Stop");
             inputStop.setAttribute("value", dictionary[word]['stop'])
-            inputStop.setAttribute("maxlength", 4);
+            inputStop.setAttribute("size", "3");
 
             buttonSubmit.setAttribute("id", curent_setting);
             buttonSubmit.innerHTML = "Удалить";
