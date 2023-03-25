@@ -8,6 +8,7 @@
             color: var(--tg-theme-text-color);
             background: var(--tg-theme-bg-color);
             display: flex;
+            flex-direction: column;
             align-items: center;
             font-size: 25px;
         }
@@ -30,6 +31,7 @@
         .button:not(:last-child) {
             margin-bottom: 25px
         }
+
 
     </style>
 </head>
@@ -110,6 +112,7 @@
             let buttonSubmit = document.createElement("button");
 
             form.setAttribute("id", "form" + curent_setting);
+            form.setAttribute("width", "100%")
 
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
