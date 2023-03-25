@@ -55,12 +55,29 @@
         //tg.MainButton.setText("Changed Text1");
         tg.MainButton.textColor = "#F55353";
         tg.MainButton.color = "#143F6B";
-        tg.MainButton.setParams({ "color": "#143F6B" });
-        tg.MainButton.show()
-        let btn = document.getElementById("btn");
+        //tg.MainButton.setParams({ "color": "#143F6B" });
 
         const urlParams = new URLSearchParams(window.location.search);
-        const dictionary = JSON.parse(urlParams.get('param1'));
+        var dic_param = urlParams.get('param1');
+        dic_param = dic_param.split(' ');
+        var dictionary = {}
+        for (var elem in dic_param) {
+            var result = dic_param[elem].split('_')
+            var symbol = result[0];
+            var quantity = result[1];
+            var aditional = result[2];
+            var take = result[3];
+            var stop = result[4];
+            var trend = result[5];
+            dictionary[symbol] = {
+                'quantity': quantity,
+                'addition': aditional,
+                'take': take,
+                'stop': stop,
+                'trend': trend
+            }
+            console.log(dictionary)
+        }
         var symbols = ["symbol1", "symbol2", "symbol3", "HOOKUSDT", "MAGICUSDT", "COTIUSDT", "BANDUSDT", "DARUSDT", "IMXUSDT", "FTMUSDT"]
         var trend_dic = ['BUY', 'SELL', 'REVERS']
         var curent_setting = 1
@@ -163,13 +180,17 @@
 
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
+                if (symbols[item_symbol] === word) {
+                    option_symbol.selected = true
+                }
                 option_symbol.value = symbols[item_symbol];
                 option_symbol.text = symbols[item_symbol];
                 inputSymbol.appendChild(option_symbol);
             }
 
             for (var item_trend in trend_dic) {
-                var option_trend = document.createElement("option"); 
+                var option_trend = document.createElement("option");    
+                option_trend.selected = true;
                 option_trend.value = trend_dic[item_trend];
                 option_trend.text = trend_dic[item_trend];
                 inputTrend.appendChild(option_trend);
@@ -244,7 +265,8 @@
                     "trend": trend
                 };  
             });
-
+            // Выводим данные в консоль для проверки
+            console.log(data);
         }
 
         Telegram.WebApp.onEvent('mainButtonClicked', function () {
@@ -269,7 +291,7 @@
                     "trend": trend
                 };
             });
-            tg.sendData("Типа что-то получилось");
+            tg.sendData(data);
 
         });
 
