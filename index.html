@@ -10,7 +10,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 18px;
+            font-size: 25px;
         }
 
         .hint {
@@ -25,33 +25,13 @@
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
             border: none;
-            font-size: 18px;
+            font-size: 25px;
         }
 
-            .button:not(:last-child) {
-                margin-bottom: 20px
-            }
-
-        usercard {
-            text-align: center;
+        .button:not(:last-child) {
+            margin-bottom: 25px
         }
 
-        .input {
-            display: block;
-            width: 100%;
-            height: calc(2.25rem + 2px);
-            padding: 0.375rem 0.75rem;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #bdbdbd;
-            border-radius: 0.25rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
     </style>
 </head>
 <body>
@@ -169,13 +149,13 @@
             inputAditional.setAttribute("value", dictionary[word]['addition'])
             inputAditional.setAttribute("size", "3");
 
-            inputTake.setAttribute("type", "number");
+            inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form" + curent_setting + "-take");
             inputTake.setAttribute("name", "Take");
             inputTake.setAttribute("value", dictionary[word]['take'])
             inputTake.setAttribute("size", "3");
 
-            inputStop.setAttribute("type", "number");
+            inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form" + curent_setting + "-stop");
             inputStop.setAttribute("name", "Stop");
             inputStop.setAttribute("value", dictionary[word]['stop'])
@@ -236,26 +216,29 @@
             inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
             inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
 
-            inputQuantity.setAttribute("type", "number");
+            inputQuantity.setAttribute("type", "text");
             inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            inputQuantity.setAttribute("maxlength", "5");
-            inputQuantity.setAttribute("width", "5");
+            //inputQuantity.setAttribute("value", dictionary[word]['quantity']);
+            inputQuantity.setAttribute("size", "3");
 
-            inputAditional.setAttribute("type", "number");
+            inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
-            inputAditional.setAttribute("maxlength", 4);
+            //inputAditional.setAttribute("value", dictionary[word]['addition'])
+            inputAditional.setAttribute("size", "3");
 
-            inputTake.setAttribute("type", "number");
+            inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form" + curent_setting + "-take");
             inputTake.setAttribute("name", "Take");
-            inputTake.setAttribute("maxlength", 4);
+            //inputTake.setAttribute("value", dictionary[word]['take'])
+            inputTake.setAttribute("size", "3");
 
-            inputStop.setAttribute("type", "number");
+            inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form" + curent_setting + "-stop");
             inputStop.setAttribute("name", "Stop");
-            inputStop.setAttribute("maxlength", 4);
+            //inputStop.setAttribute("value", dictionary[word]['stop'])
+            inputStop.setAttribute("size", "3");
 
             buttonSubmit.setAttribute("id", curent_setting);
             buttonSubmit.innerHTML = "Удалить";
