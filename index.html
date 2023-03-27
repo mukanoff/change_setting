@@ -40,7 +40,6 @@
         select {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
-            display: flex;
             border: none;
             font-size: 15px;
         }
@@ -68,36 +67,15 @@
         let tg = window.Telegram.WebApp;
 
         tg.expand();
-
         tg.MainButton.text = "Отправить настройки";
-        //tg.MainButton.setText("Changed Text1");
         tg.MainButton.textColor = "#F55353";
         tg.MainButton.color = "#143F6B";
         tg.MainButton.show();
-        //tg.MainButton.setParams({ "color": "#143F6B" });
 
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param = urlParams.get('param1');
         dictionary = JSON.parse(decodeURI(dic_param))
-        //dic_param = dic_param.split(' ');
-        //var dictionary = {}
-        //for (var elem in dic_param) {
-        //    var result = dic_param[elem].split('_')
-        //    var symbol = result[0];
-        //    var quantity = result[1];
-        //    var aditional = result[2];
-        //    var take = result[3];
-        //    var stop = result[4];
-        //    var trend = result[5];
-        //    dictionary[symbol] = {
-        //        'quantity': quantity,
-        //        'addition': aditional,
-        //        'take': take,
-        //        'stop': stop,
-        //        'trend': trend
-        //    }
-        //    console.log(dictionary)
-        //}
+
         var symbols = ['BTCUSDT', 'ETHUSDT', 'BCHUSDT', 'XRPUSDT', 'EOSUSDT', 'LTCUSDT', 'TRXUSDT',
             'ETCUSDT', 'LINKUSDT', 'XLMUSDT', 'ADAUSDT', 'XMRUSDT', 'DASHUSDT', 'ZECUSDT', 'XTZUSDT',
             'BNBUSDT', 'ATOMUSDT', 'ONTUSDT', 'IOTAUSDT', 'BATUSDT', 'VETUSDT', 'NEOUSDT', 'QTUMUSDT',
