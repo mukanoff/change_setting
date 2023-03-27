@@ -32,7 +32,6 @@
         select {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
-            display: flex;
             border: none;
             font-size: 15px;
         }
@@ -70,7 +69,8 @@
         var dic_param = urlParams.get('param1');
         dictionary = JSON.parse(decodeURI(dic_param))
 
-        var symbols = ['BTCUSDT', 'ETHUSDT', 'BCHUSDT', 'XRPUSDT', 'EOSUSDT', 'LTCUSDT', 'TRXUSDT',
+        var symbols = [
+            'BTCUSDT', 'ETHUSDT', 'BCHUSDT', 'XRPUSDT', 'EOSUSDT', 'LTCUSDT', 'TRXUSDT',
             'ETCUSDT', 'LINKUSDT', 'XLMUSDT', 'ADAUSDT', 'XMRUSDT', 'DASHUSDT', 'ZECUSDT', 'XTZUSDT',
             'BNBUSDT', 'ATOMUSDT', 'ONTUSDT', 'IOTAUSDT', 'BATUSDT', 'VETUSDT', 'NEOUSDT', 'QTUMUSDT',
             'IOSTUSDT', 'THETAUSDT', 'ALGOUSDT', 'ZILUSDT', 'KNCUSDT', 'ZRXUSDT', 'COMPUSDT', 'OMGUSDT',
@@ -104,7 +104,6 @@
             let buttonSubmit = document.createElement("button");
 
             form.setAttribute("id", "form" + curent_setting);
-            form.setAttribute("width", "100%")
 
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
@@ -135,25 +134,25 @@
             inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             inputQuantity.setAttribute("value", dictionary[word]['quantity']);
-            inputQuantity.setAttribute("size", "3");
+            inputQuantity.setAttribute("size", "2");
             
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             inputAditional.setAttribute("value", dictionary[word]['addition'])
-            inputAditional.setAttribute("size", "3");
+            inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form" + curent_setting + "-take");
             inputTake.setAttribute("name", "Take");
             inputTake.setAttribute("value", dictionary[word]['take'])
-            inputTake.setAttribute("size", "3");
+            inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form" + curent_setting + "-stop");
             inputStop.setAttribute("name", "Stop");
             inputStop.setAttribute("value", dictionary[word]['stop'])
-            inputStop.setAttribute("size", "3");
+            inputStop.setAttribute("size", "2");
 
             buttonSubmit.setAttribute("id", curent_setting);
             buttonSubmit.innerHTML = "Удалить";
@@ -214,25 +213,25 @@
             inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             //inputQuantity.setAttribute("value", dictionary[word]['quantity']);
-            inputQuantity.setAttribute("size", "3");
+            inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             //inputAditional.setAttribute("value", dictionary[word]['addition'])
-            inputAditional.setAttribute("size", "3");
+            inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form" + curent_setting + "-take");
             inputTake.setAttribute("name", "Take");
             //inputTake.setAttribute("value", dictionary[word]['take'])
-            inputTake.setAttribute("size", "3");
+            inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form" + curent_setting + "-stop");
             inputStop.setAttribute("name", "Stop");
             //inputStop.setAttribute("value", dictionary[word]['stop'])
-            inputStop.setAttribute("size", "3");
+            inputStop.setAttribute("size", "2");
 
             buttonSubmit.setAttribute("id", curent_setting);
             buttonSubmit.innerHTML = "Удалить";
