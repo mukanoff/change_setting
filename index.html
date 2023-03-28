@@ -1,7 +1,11 @@
 <!DOCTYPE html> 
 <html>
 <head>
+    <Link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <title>Настройки</title>
     <style>
         body {
@@ -44,7 +48,6 @@
             align-items: center;
             font-size: 25px;
         }
-
     </style>
 </head>
 <body>
@@ -53,10 +56,10 @@
     <div id="dictionary"></div>
 
     <button name="add" id="add">Добавить</button>
-    <button name="auto" id="auto">auto</button>
+    
 
     <script>
-
+        //<button name="auto" id="auto">auto</button>
         let tg = window.Telegram.WebApp;
 
         tg.expand();
@@ -71,7 +74,8 @@
         var dictionary = {};
         var symbols = {};
         dctnr = dic_param1.split('~');
-        
+        dctnr2 = dic_param2.split('~');
+
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
             dictionary[elem[0]] = {
@@ -83,8 +87,6 @@
             }
         }
 
-        dctnr2 = dic_param2.split('~');
-        
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
             symbols[elem[0]] = {
@@ -95,36 +97,15 @@
             }
         }
 
-        //var symbols = [
-        //    'BTCUSDT', 'ETHUSDT', 'BCHUSDT', 'XRPUSDT', 'EOSUSDT', 'LTCUSDT', 'TRXUSDT',
-        //    'ETCUSDT', 'LINKUSDT', 'XLMUSDT', 'ADAUSDT', 'XMRUSDT', 'DASHUSDT', 'ZECUSDT', 'XTZUSDT',
-        //    'BNBUSDT', 'ATOMUSDT', 'ONTUSDT', 'IOTAUSDT', 'BATUSDT', 'VETUSDT', 'NEOUSDT', 'QTUMUSDT',
-        //    'IOSTUSDT', 'THETAUSDT', 'ALGOUSDT', 'ZILUSDT', 'KNCUSDT', 'ZRXUSDT', 'COMPUSDT', 'OMGUSDT',
-        //    'DOGEUSDT', 'SXPUSDT', 'KAVAUSDT', 'BANDUSDT', 'RLCUSDT', 'WAVESUSDT', 'MKRUSDT', 'SNXUSDT',
-        //    'DOTUSDT', 'DEFIUSDT', 'YFIUSDT', 'BALUSDT', 'CRVUSDT', 'TRBUSDT', 'RUNEUSDT', 'SUSHIUSDT',
-        //    'SRMUSDT', 'EGLDUSDT', 'SOLUSDT', 'ICXUSDT', 'STORJUSDT', 'BLZUSDT', 'UNIUSDT', 'AVAXUSDT',
-        //    'FTMUSDT', 'HNTUSDT', 'ENJUSDT', 'FLMUSDT', 'TOMOUSDT', 'RENUSDT', 'KSMUSDT', 'NEARUSDT',
-        //    'AAVEUSDT', 'FILUSDT', 'RSRUSDT', 'LRCUSDT', 'MATICUSDT', 'OCEANUSDT', 'CVCUSDT', 'BELUSDT',
-        //    'CTKUSDT', 'AXSUSDT', 'ALPHAUSDT', 'ZENUSDT', 'SKLUSDT', 'GRTUSDT', '1INCHUSDT', 'BTCBUSD',
-        //    'CHZUSDT', 'SANDUSDT', 'ANKRUSDT', 'BTSUSDT', 'LITUSDT', 'UNFIUSDT', 'REEFUSDT', 'RVNUSDT',
-        //    'SFPUSDT', 'XEMUSDT', 'BTCSTUSDT', 'COTIUSDT', 'CHRUSDT', 'MANAUSDT', 'ALICEUSDT', 'HBARUSDT',
-        //    'ONEUSDT', 'LINAUSDT', 'STMXUSDT', 'DENTUSDT', 'CELRUSDT', 'HOTUSDT', 'MTLUSDT', 'OGNUSDT',
-        //    'NKNUSDT', 'SCUSDT', 'DGBUSDT', '1000SHIBUSDT', 'BAKEUSDT', 'GTCUSDT', 'ETHBUSD', 'BTCDOMUSDT',
-        //    'TLMUSDT', 'BNBBUSD', 'ADABUSD', 'XRPBUSD', 'IOTXUSDT', 'DOGEBUSD', 'AUDIOUSDT', 'RAYUSDT', 'C98USDT',
-        //    'MASKUSDT', 'ATAUSDT', 'SOLBUSD', 'FTTBUSD', 'DYDXUSDT', '1000XECUSDT', 'GALAUSDT', 'CELOUSDT', 'ARUSDT',
-        //    'KLAYUSDT', 'ARPAUSDT', 'CTSIUSDT', 'LPTUSDT', 'ENSUSDT', 'PEOPLEUSDT', 'ANTUSDT', 'ROSEUSDT', 'DUSKUSDT',
-        //    'FLOWUSDT', 'IMXUSDT', 'API3USDT', 'GMTUSDT', 'APEUSDT', 'WOOUSDT', 'FTTUSDT', 'JASMYUSDT', 'DARUSDT', 'GALUSDT',
-        //    'AVAXBUSD', 'NEARBUSD', 'GMTBUSD', 'APEBUSD', 'GALBUSD', 'FTMBUSD', 'DODOBUSD', 'ANCBUSD', 'GALABUSD', 'TRXBUSD',
-        //    '1000LUNCBUSD', 'OPUSDT', 'DOTBUSD', 'TLMBUSD', 'WAVESBUSD', 'LINKBUSD', 'SANDBUSD', 'LTCBUSD', 'MATICBUSD', 'CVXBUSD',
-        //    'FILBUSD', '1000SHIBBUSD', 'LEVERBUSD', 'ETCBUSD', 'LDOBUSD', 'UNIBUSD', 'AUCTIONBUSD', 'INJUSDT', 'STGUSDT', 'FOOTBALLUSDT',
-        //    'SPELLUSDT', '1000LUNCUSDT', 'LUNA2USDT', 'AMBBUSD', 'PHBBUSD', 'LDOUSDT', 'CVXUSDT', 'ICPUSDT', 'APTUSDT', 'QNTUSDT', 'APTBUSD',
-        //    'BLUEBIRDUSDT', 'ETHUSDT_230331', 'BTCUSDT_230331', 'FETUSDT', 'AGIXBUSD', 'FXSUSDT', 'HOOKUSDT', 'MAGICUSDT', 'TUSDT', 'RNDRUSDT',
-        //    'HIGHUSDT', 'MINAUSDT', 'ASTRUSDT', 'AGIXUSDT', 'PHBUSDT', 'GMXUSDT', 'CFXUSDT', 'STXUSDT', 'COCOSUSDT', 'BNXUSDT', 'ACHUSDT',
-        //    'SSVUSDT', 'CKBUSDT', 'PERPUSDT', 'TRUUSDT', 'LQTYUSDT', 'USDCUSDT', 'IDUSDT', 'ARBUSDT'];
+        all_trend = {
+            'buy': '🟢',
+            'sell': '🔴',
+            'sell_': '⬇️',
+            'buy_': '⬆️',
+        }
 
         var trend_dic = ['BUY', 'SELL', 'REVERS', 'AUTO2']
-        var curent_setting = 1
-       
+
         for (var word in dictionary) {
             let form = document.createElement("form");
             let inputSymbol = document.createElement("select",);
@@ -135,7 +116,7 @@
             let inputTrend = document.createElement("select");
             let buttonSubmit = document.createElement("button");
 
-            form.setAttribute("id", "form" + curent_setting);
+            form.setAttribute("id", "form" + word);
 
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
@@ -143,7 +124,7 @@
                     option_symbol.selected = true
                 }
                 option_symbol.value = item_symbol;
-                option_symbol.text = '🟢' + item_symbol + symbols[item_symbol]['vol']+'%';
+                option_symbol.text = item_symbol + all_trend[symbols[item_symbol]['trend']]+' ' + symbols[item_symbol]['vol'] + '% k:' + symbols[item_symbol]['koef'] + ' s:' + symbols[item_symbol]['count'];
                 inputSymbol.appendChild(option_symbol);
             }
 
@@ -156,45 +137,49 @@
                 option_trend.text = trend_dic[item_trend];
                 inputTrend.appendChild(option_trend);
             }
+            //inputSymbol.setAttribute("class", "js-states form-control");
+            inputSymbol.setAttribute("name", word);
+            inputTrend.setAttribute("name", word);
+            inputSymbol.setAttribute("id", "form" + word + "-symbol");
+            inputTrend.setAttribute("id", "form" + word + "-trend");
 
-            inputSymbol.setAttribute("name", curent_setting);
-            inputTrend.setAttribute("name", curent_setting);
-            inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
-            inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
-                
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
+            inputQuantity.setAttribute("id", "form" + word + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             inputQuantity.setAttribute("value", dictionary[word]['quantity']);
             inputQuantity.setAttribute("size", "2");
-            
+
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
+            inputAditional.setAttribute("id", "form" + word + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             inputAditional.setAttribute("value", dictionary[word]['addition'])
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + curent_setting + "-take");
+            inputTake.setAttribute("id", "form" + word + "-take");
             inputTake.setAttribute("name", "Take");
             inputTake.setAttribute("value", dictionary[word]['take'])
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + curent_setting + "-stop");
+            inputStop.setAttribute("id", "form" + word + "-stop");
             inputStop.setAttribute("name", "Stop");
             inputStop.setAttribute("value", dictionary[word]['stop'])
             inputStop.setAttribute("size", "2");
 
-            buttonSubmit.setAttribute("id", curent_setting);
+            buttonSubmit.setAttribute("id", word);
             buttonSubmit.innerHTML = "Удалить";
             buttonSubmit.setAttribute("id", "form." + word);
+
+            inputSymbol.onchange = function (e) {
+
+            }
 
             buttonSubmit.onclick = function (e) {
                 e.preventDefault();
                 const form = e.target.closest('form');
                 form.remove();
-                curent_setting = curent_setting - 1 
+                word = word
             }
 
             form.appendChild(inputSymbol);
@@ -205,7 +190,7 @@
             form.appendChild(inputTrend);
             form.appendChild(buttonSubmit);
             document.body.appendChild(form);
-            curent_setting = curent_setting + 1
+            word = word
         }
 
         add.onclick = function () {
@@ -231,36 +216,36 @@
             }
 
             for (var item_trend in trend_dic) {
-                var option_trend = document.createElement("option");    
+                var option_trend = document.createElement("option");
                 option_trend.selected = true;
                 option_trend.value = trend_dic[item_trend];
                 option_trend.text = trend_dic[item_trend];
                 inputTrend.appendChild(option_trend);
             }
 
-            inputSymbol.setAttribute("id", "form" + curent_setting + "-symbol");
-            inputTrend.setAttribute("id", "form" + curent_setting + "-trend");
+            inputSymbol.setAttribute("id", "form" + word + "-symbol");
+            inputTrend.setAttribute("id", "form" + word + "-trend");
 
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + curent_setting + "-quantity");
+            inputQuantity.setAttribute("id", "form" + word + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             //inputQuantity.setAttribute("value", dictionary[word]['quantity']);
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + curent_setting + "-aditional");
+            inputAditional.setAttribute("id", "form" + word + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             //inputAditional.setAttribute("value", dictionary[word]['addition'])
-            inputAditional.setAttribute("size", "2");
+            inputAditional.setAttribute("size", "1");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + curent_setting + "-take");
+            inputTake.setAttribute("id", "form" + word + "-take");
             inputTake.setAttribute("name", "Take");
             //inputTake.setAttribute("value", dictionary[word]['take'])
-            inputTake.setAttribute("size", "2");
+            inputTake.setAttribute("size", "1");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + curent_setting + "-stop");
+            inputStop.setAttribute("id", "form" + word + "-stop");
             inputStop.setAttribute("name", "Stop");
             //inputStop.setAttribute("value", dictionary[word]['stop'])
             inputStop.setAttribute("size", "2");
@@ -273,7 +258,7 @@
                 e.preventDefault();
                 const form = e.target.closest('form');
                 form.remove();
-                curent_setting = curent_setting - 1
+                word = word
             }
 
             form.appendChild(inputSymbol);
@@ -284,7 +269,7 @@
             form.appendChild(inputTrend);
             form.appendChild(buttonSubmit);
             document.body.appendChild(form);
-            curent_setting = curent_setting + 1
+            word = word
         }
 
         auto.onclick = function () {
@@ -308,7 +293,7 @@
                     "take": take,
                     "stop": stop,
                     "trend": trend
-                };  
+                };
             });
             // Выводим данные в консоль для проверки
             console.log(data);
@@ -336,7 +321,6 @@
                     "trend": trend
                 };
             });
-            //tg.sendData(data);
             tg.sendData(JSON.stringify(data));
         });
 
