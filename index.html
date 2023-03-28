@@ -57,8 +57,8 @@
 
     <button name="add" id="add">Добавить</button>
     <div id="dictionary">
-        <input id="number_symbol" type="number" /> <button name="add" id="auto">Авто подбор</button>
-        
+        <input id="number_symbol" type="number" /> 
+        <button name="add" id="auto">Авто подбор</button>
     </div>
 
     <script>
@@ -312,8 +312,7 @@
 
         Telegram.WebApp.onEvent('mainButtonClicked', function () {
             const forms = document.querySelectorAll('form');
-            // Создаем пустой объект для хранения данных
-            const data = {};
+            const data = '';
             // Проходимся по каждой форме
             forms.forEach(form => {
                 // Получаем все input в текущей форме
@@ -324,15 +323,16 @@
                 const take = document.getElementById(set + "-take").value
                 const stop = document.getElementById(set + "-stop").value
                 const trend = document.getElementById(set + "-trend").value
-                data[symbol] = {
-                    "quantity": quantity,
-                    "additional": additional,
-                    "take": take,
-                    "stop": stop,
-                    "trend": trend
-                };
+                //data[symbol] = {
+                //    "quantity": quantity,
+                //    "additional": additional,
+                //    "take": take,
+                //    "stop": stop,
+                //    "trend": trend
+                //};
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend +'\n'
             });
-            tg.sendData(JSON.stringify(data));
+            tg.sendData(data);//JSON.stringify(data));
         });
 
     </script>
