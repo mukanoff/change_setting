@@ -14,14 +14,14 @@
             align-items: stretch;
             flex-direction: column;
             align-items: center;
-            *font-size: 100px;
+            *font-size: 20px;
         }
 
         button {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
             border: none;
-            /*font-size: 15px;*/
+            font-size: 20px;
         }
 
         input {
@@ -29,14 +29,14 @@
             color: var(--tg-theme-button-text-color);
             /*display: flex;*/
             border: none;
-            /*font-size: 15px;*/
+            font-size: 20px;
         }
 
         select {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
             border: none;
-            /*font-size: 15px;*/
+            font-size: 20px;
         }
 
         form {
@@ -46,7 +46,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            font-size: 25px;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -56,21 +56,19 @@
     <div id="dictionary"></div>
 
     <button name="add" id="add">Добавить</button>
-    <div id="dictionary">
-        <input id="number_symbol" type="number" /> 
-        <button name="add" id="auto">Авто подбор</button>
-    </div>
+    
 
     <script>
-        //<button name="auto" id="auto">auto</button>
+        //<div id="dictionary">
+        //    <input id="number_symbol" type="number" />
+        //    <button name="add" id="auto">Авто подбор</button>
+        //</div>
         let tg = window.Telegram.WebApp;
-
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
         tg.MainButton.textColor = "#F55353";
         tg.MainButton.color = "#143F6B";
         tg.MainButton.show();
-
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param1 = urlParams.get('param1');
         var dic_param2 = urlParams.get('param2');
@@ -92,11 +90,17 @@
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
+            addition = elem[1] / 20;
+            trend = elem[4];
+            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
             symbols[elem[0]] = {
-                'vol': elem[1],
+                'quantity': '0',
+                'addition': addition,
+                'take': addition * 0.9,
+                'stop': '0',
+                'trend': trend,
                 'koef': elem[2],
                 'count': elem[3],
-                'trend': elem[4],
             }
         }
 
@@ -105,19 +109,23 @@
             'sell': '🔴',
             'sell_': '⬇️',
             'buy_': '⬆️',
-        }
+        };
 
-        var trend_dic = ['BUY', 'SELL', 'REVERS']
+        all_star = {
+            '0': '🥉',
+            '1': '🥈',
+            '2': '🥇',
+            '3': '🥇',
+            '4': '🥇',
+            '5': '🥇',
+        };
 
-        let form = document.createElement("label");
-        let inputSymbol = document.createElement("label",);
-        let inputQuantity = document.createElement("label");
-        let inputAditional = document.createElement("label");
-        let inputTake = document.createElement("label");
-        let inputStop = document.createElement("label");
-        let inputTrend = document.createElement("label");
+        console.log(symbols);
+        console.log(dictionary);
 
-        for (var word in dictionary) {
+        var trend_dic = ['BUY', 'SELL', 'REVERS'];
+
+        function create_form(word, dic_work) {
             let form = document.createElement("form");
             let inputSymbol = document.createElement("select",);
             let inputQuantity = document.createElement("input");
@@ -127,15 +135,16 @@
             let inputTrend = document.createElement("select");
             let buttonSubmit = document.createElement("button");
 
-            form.setAttribute("id", "form" + word);
-
             for (var item_symbol in symbols) {
                 var option_symbol = document.createElement("option");
                 if (item_symbol === word) {
-                    option_symbol.selected = true
+                    option_symbol.selected = true;
                 }
                 option_symbol.value = item_symbol;
-                option_symbol.text = item_symbol + all_trend[symbols[item_symbol]['trend']]+' ' + symbols[item_symbol]['vol'] + '% k:' + symbols[item_symbol]['koef'] + ' s:' + symbols[item_symbol]['count'];
+                first_star = all_star[Math.round(symbols[item_symbol]['addition'])];
+                second_star = all_star[Math.round(symbols[item_symbol]['koef'] / 10)];
+                third_star = all_star[Math.round(symbols[item_symbol]['count'] / 10)];
+                option_symbol.text = item_symbol + all_trend[symbols[item_symbol]['trend']] + first_star + second_star + third_star;
                 inputSymbol.appendChild(option_symbol);
             }
 
@@ -148,6 +157,8 @@
                 option_trend.text = trend_dic[item_trend];
                 inputTrend.appendChild(option_trend);
             }
+
+            form.setAttribute("id", "form" + word);
             inputSymbol.setAttribute("class", "js-states form-control");
             inputSymbol.setAttribute("name", word);
             inputTrend.setAttribute("name", word);
@@ -181,18 +192,7 @@
             buttonSubmit.setAttribute("id", word);
             buttonSubmit.innerHTML = "Удалить";
             buttonSubmit.setAttribute("id", "form." + word);
-
-            inputSymbol.onchange = function (e) {
-
-            }
-
-            buttonSubmit.onclick = function (e) {
-                e.preventDefault();
-                const form = e.target.closest('form');
-                form.remove();
-                word = word
-            }
-
+                        
             form.appendChild(inputSymbol);
             form.appendChild(inputQuantity);
             form.appendChild(inputAditional);
@@ -201,113 +201,30 @@
             form.appendChild(inputTrend);
             form.appendChild(buttonSubmit);
             document.body.appendChild(form);
-            word = word
+            
+        }
+
+        for (var word in dictionary) {
+            create_form(word, dictionary)
         }
 
         add.onclick = function () {
-            let form = document.createElement("form");
-            let inputSymbol = document.createElement("select",);
-            let inputQuantity = document.createElement("input");
-            let inputAditional = document.createElement("input");
-            let inputTake = document.createElement("input");
-            let inputStop = document.createElement("input");
-            let inputTrend = document.createElement("select");
-            let buttonSubmit = document.createElement("button");
-
-            form.setAttribute("id", "form" + curent_setting);
-
-            for (var item_symbol in symbols) {
-                var option_symbol = document.createElement("option");
-                if (symbols[item_symbol] === word) {
-                    option_symbol.selected = true
-                }
-                option_symbol.value = symbols[item_symbol];
-                option_symbol.text = symbols[item_symbol];
-                inputSymbol.appendChild(option_symbol);
+            
+            for (var sym in screner) {
+                if (sym in symbols) { continue }
+                else { break }
+            }
+            create_form(sym, symbols)
             }
 
-            for (var item_trend in trend_dic) {
-                var option_trend = document.createElement("option");
-                option_trend.selected = true;
-                option_trend.value = trend_dic[item_trend];
-                option_trend.text = trend_dic[item_trend];
-                inputTrend.appendChild(option_trend);
-            }
-
-            inputSymbol.setAttribute("id", "form" + word + "-symbol");
-            inputTrend.setAttribute("id", "form" + word + "-trend");
-
-            inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + word + "-quantity");
-            inputQuantity.setAttribute("name", "Quantity");
-            //inputQuantity.setAttribute("value", dictionary[word]['quantity']);
-            inputQuantity.setAttribute("size", "2");
-
-            inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + word + "-aditional");
-            inputAditional.setAttribute("name", "Aditional");
-            //inputAditional.setAttribute("value", dictionary[word]['addition'])
-            inputAditional.setAttribute("size", "1");
-
-            inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + word + "-take");
-            inputTake.setAttribute("name", "Take");
-            //inputTake.setAttribute("value", dictionary[word]['take'])
-            inputTake.setAttribute("size", "1");
-
-            inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + word + "-stop");
-            inputStop.setAttribute("name", "Stop");
-            //inputStop.setAttribute("value", dictionary[word]['stop'])
-            inputStop.setAttribute("size", "2");
-
-            buttonSubmit.setAttribute("id", curent_setting);
-            buttonSubmit.innerHTML = "Удалить";
-            buttonSubmit.setAttribute("id", "form." + word);
-
-            buttonSubmit.onclick = function (e) {
-                e.preventDefault();
-                const form = e.target.closest('form');
-                form.remove();
-                word = word
-            }
-
-            form.appendChild(inputSymbol);
-            form.appendChild(inputQuantity);
-            form.appendChild(inputAditional);
-            form.appendChild(inputTake);
-            form.appendChild(inputStop);
-            form.appendChild(inputTrend);
-            form.appendChild(buttonSubmit);
-            document.body.appendChild(form);
-            word = word
+        inputSymbol.onchange = function (e) {
+            symbol = inputSymbol.value;
         }
 
-        auto.onclick = function () {
-            // Получаем все формы на странице
-            const forms = document.querySelectorAll('form');
-            // Создаем пустой объект для хранения данных
-            const data = {};
-            // Проходимся по каждой форме
-            forms.forEach(form => {
-                // Получаем все input в текущей форме
-                const set = form.id;
-                const symbol = document.getElementById(set + "-symbol").value
-                const quantity = document.getElementById(set + "-quantity").value
-                const additional = document.getElementById(set + "-aditional").value
-                const take = document.getElementById(set + "-take").value
-                const stop = document.getElementById(set + "-stop").value
-                const trend = document.getElementById(set + "-trend").value
-                data[symbol] = {
-                    "quantity": quantity,
-                    "additional": additional,
-                    "take": take,
-                    "stop": stop,
-                    "trend": trend
-                };
-            });
-            // Выводим данные в консоль для проверки
-            console.log(data);
+        buttonSubmit.onclick = function (e) {
+            e.preventDefault();
+            const form = e.target.closest('form');
+            form.remove();
         }
 
         Telegram.WebApp.onEvent('mainButtonClicked', function () {
@@ -335,13 +252,13 @@
             tg.sendData(data);//JSON.stringify(data));
         });
 
-        $(document).ready(function () {
-            $('.js-select2').select2({
-                placeholder: "Выберите город",
-                maximumSelectionLength: 2,
-                language: "ru"
-            });
-        });
+        //$(document).ready(function () {
+        //    $('.js-select2').select2({
+        //        placeholder: "Выберите город",
+        //        maximumSelectionLength: 2,
+        //        language: "ru"
+        //    });
+        //})
 
     </script>
 </body>
