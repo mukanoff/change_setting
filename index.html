@@ -249,7 +249,7 @@
                 //};
                 data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend +'\n'
             });
-            tg.sendData(data);//JSON.stringify(data));
+            tg.sendData(JSON.stringify(data));//);
         });
 
         //$(document).ready(function () {
