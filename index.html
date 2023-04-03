@@ -27,7 +27,6 @@
         input {
             background: var(--tg-theme-button-color);
             color: var(--tg-theme-button-text-color);
-            /*display: flex;*/
             border: none;
             font-size: 15px;
         }
@@ -72,6 +71,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param1 = urlParams.get('param1');
         var dic_param2 = urlParams.get('param2');
+        var balance = urlParams.get('param3');
         var dictionary = {};
         let symbols = {};
         let dctnr;
@@ -108,9 +108,10 @@
             var elem = dctnr2[jj].split('-');
             addition = elem[1] / 20;
             trend = elem[4];
+            quantity = balance * 0, 1;
             //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
             symbols[elem[0]] = {
-                'quantity': '0',
+                'quantity': quantity,
                 'addition': addition,
                 'take': addition * 0.9,
                 'stop': '0',
@@ -134,10 +135,6 @@
             '4': '🥇',
             '5': '🥇',
         };
-
-        console.log(symbols);
-        console.log(dictionary);
-
         let trend_dic = ['BUY', 'SELL', 'REVERS'];
         let form = document.createElement("form");
         let inputSymbol = document.createElement("select",);
@@ -148,7 +145,7 @@
         let inputTrend = document.createElement("select");
         let buttonSubmit = document.createElement("button");
 
-        function create_form(word, dic_work) {
+        function create_form(word, dic_work, percent = 10) {
 
             form = document.createElement("form");
             inputSymbol = document.createElement("select",);
@@ -192,25 +189,38 @@
             inputQuantity.setAttribute("type", "text");
             inputQuantity.setAttribute("id", "form" + word + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            inputQuantity.setAttribute("value", dic_work[word]['quantity']);
+            if (dic_work[word]['quantity'] === 0) {
+                inputQuantity.setAttribute("value", Math.round(balance*percent/100));
+            }
+            else {
+                inputQuantity.setAttribute("value", dic_work[word]['quantity']);
+            }
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form" + word + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
-            inputAditional.setAttribute("value", dic_work[word]['addition'])
+            if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
+            else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form" + word + "-take");
             inputTake.setAttribute("name", "Take");
-            inputTake.setAttribute("value", dic_work[word]['take'])
+            if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
+            else { inputTake.setAttribute("value", dic_work[word]['take']) }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form" + word + "-stop");
             inputStop.setAttribute("name", "Stop");
-            inputStop.setAttribute("value", dic_work[word]['stop'])
+            if (dic_work[word]['quantity'] === 0) {
+                inputStop.setAttribute("value", Math.round(balance * percent / 100));
+            }
+            else {
+                inputStop.setAttribute("value", dic_work[word]['stop']);
+            }
+            
             inputStop.setAttribute("size", "2");
 
             buttonSubmit.setAttribute("id", word);
@@ -246,8 +256,15 @@
 
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
-            
-            const forms = document.querySelectorAll('form');            
+            if (settings.includes(',')){
+                mass = settings.split(',');
+                settings = mass[0];
+                percent = mass[1];
+            }
+            else {
+                percent = 10;
+            }
+            const forms = document.querySelectorAll('form');   
             forms.forEach(form => {
                 form.remove();
             });
@@ -255,8 +272,8 @@
             for (let sym in symbols) {
                 i++
                 if (i < 3) { continue; };
-                create_form(sym, symbols);
-                if (i > settings) { break };
+                create_form(sym, symbols, percent);
+                if (i > (Number(settings) + 1)) { break };
             }
         }
 
