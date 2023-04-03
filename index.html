@@ -7,9 +7,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <title>Настройки</title>
     <style>
+        
+                 
         body {
             color: var(--tg-theme-text-color);
-            background: var(--tg-theme-bg-color);
+            *background: var(--tg-theme-bg-color);           
             display: flex;
             align-items: stretch;
             flex-direction: column;
@@ -19,24 +21,44 @@
 
         button {
             background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
+            /*color: var(--tg-theme-button-text-color);*/
+            color: #000000;
+            background-color: #FFFAFA;
+            border-radius: 3px;
+            border: 1px solid #DCDCDC;
             font-size: 15px;
+            width: auto; 
+            
+            
         }
 
         input {
             background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: 2px solid #808080;
-            font-size: 15px;
-            background-color: #D3D3D3;
+            /*color: var(--tg-theme-button-text-color);*/
+            color: #000000;
+            background-color: #FFFAFA;
+            border-radius: 3px;            
+            border: 1px solid #DCDCDC;
+            font-size: 15px;            
+            min-width: 10px;
+            max-width: 40px;
+            width: auto; 
         }
-
+        
+         
         select {
             background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
-            font-size: 15px;
+            /*color: var(--tg-theme-button-text-color);*/
+            color: #000000;
+            background-color: #FFFAFA;
+            border-radius: 3px;            
+            border: 1px solid #DCDCDC;
+            font-size: 15px;                       
+            min-width: 50px;
+            max-width: 90px;
+            width: auto;
+            -webkit-appearance: none;
+            cursor: pointer;
         }
 
         form {
@@ -47,17 +69,28 @@
             flex-direction: row;
             align-items: center;
             font-size: 15px;
+            
+            justify-content: space-between;
+            padding: 1px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px #C0C0C0;
+            margin: 4px;
+            max-width: 100%;
         }
+        
+       
+        
     </style>
 </head>
 <body>
-    <h1>Settings</h1>
+    <h1>Binance</h1>
+    <h2> StepByStep Settings</h2>
     
-    <button name="test" id="test">test</button>
     <div>
         <input type="text" id="auto_set" />
         <button name="autoset" id="autoset">AutoSettings</button>
-        <button name="add" id="add">Add NEW</button>
+        <button name="add" id="add" >Add NEW</button>
 
     </div>
 
@@ -66,8 +99,8 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
-        tg.MainButton.textColor = "#F55353";
-        tg.MainButton.color = "#143F6B";
+        tg.MainButton.textColor = "#000000";
+        tg.MainButton.color = "#4169E1";
         tg.MainButton.show();
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param1 = urlParams.get('param1');
@@ -225,7 +258,7 @@
             inputStop.setAttribute("size", "2");
 
             buttonSubmit.setAttribute("id", word);
-            buttonSubmit.innerHTML = "Удалить";
+            buttonSubmit.innerHTML = "❌";
             buttonSubmit.setAttribute("id", "form." + word);
                         
             form.appendChild(inputSymbol);
@@ -306,5 +339,6 @@
         //})
 
     </script>
+   
 </body>
 </html>
