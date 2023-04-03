@@ -48,6 +48,13 @@
             border-radius: 3px;
         }
         
+        button.special-button-right {
+            background: #F0E68C;
+            border: 1px solid #FFFAFA;
+            /* добавьте класс "right-align" для сдвига кнопки вправо */
+            margin-left: auto;
+        }
+        
         input {
             background: var(--tg-theme-button-color);
             /*color: var(--tg-theme-button-text-color);*/
@@ -106,7 +113,7 @@
     <div>
         <input type="text" id="auto_set" class="special-input" />
         <button name="autoset" id="autoset" class="special-button">AutoSettings</button>
-        <button name="add" id="add" >Add NEW</button>
+        <button name="add" id="add" class="special-button-right">Add NEW</button>
 
     </div>
 
