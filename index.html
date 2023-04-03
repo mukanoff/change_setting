@@ -177,21 +177,7 @@
                 'count': elem[3],
             }
         }
-
-        let all_trend = {
-            'buy': '🟢',
-            'sell': '🔴',
-            'sell_': '⬇️',
-            'buy_': '⬆️',
-        };
-        let all_star = {
-            '0': '🥉',
-            '1': '🥈',
-            '2': '🥇',
-            '3': '🥇',
-            '4': '🥇',
-            '5': '🥇',
-        };
+        
         let trend_dic = ['BUY', 'SELL', 'REVERS'];
         let form = document.createElement("form");
         let inputSymbol = document.createElement("select",);
@@ -237,7 +223,8 @@
             }
 
             form.setAttribute("id", "form" + word);
-            inputSymbol.setAttribute("class", "js-states form-control");
+            inputSymbol.setAttribute("class", "js-select2"); 
+            inputSymbol.setAttribute("placeholder", "Выберите город");
             inputSymbol.setAttribute("name", word);
             inputTrend.setAttribute("name", word);
             inputSymbol.setAttribute("id", "form" + word + "-symbol");
@@ -353,13 +340,13 @@
             tg.sendData(data);
         });
 
-        //$(document).ready(function () {
-        //    $('.js-select2').select2({
-        //        placeholder: "Выберите город",
-        //        maximumSelectionLength: 2,
-        //        language: "ru"
-        //    });
-        //})
+        $(document).ready(function () {
+           $('.js-select2').select2({
+               placeholder: "Выберите город",
+               maximumSelectionLength: 2,
+               language: "ru"
+           });
+        })
 
     </script>
    
