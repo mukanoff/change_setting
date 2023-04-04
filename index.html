@@ -83,6 +83,25 @@
             max-width: 100%;
         }
         
+        form_header {
+            color: var(--tg-theme-text-color);
+            background: White;
+            /*background: var(--tg-theme-bg-color);*/
+            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-size: 15px;
+            
+            justify-content: space-between;
+            padding: 0px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px #C0C0C0;
+            margin: 4px;
+            max-width: 100%;
+        }
+        
     </style>
 </head>
 <body>
@@ -93,6 +112,7 @@
         <input type="text" id="auto_set"/>
         <button name="autoset" id="autoset">AutoSettings</button>
         <button name="add" id="add">Add NEW</button>
+         <form_header>Symbol  Volume %  take%  stop  Trend</form_header>
 
     </div>
 
