@@ -331,7 +331,13 @@
         add.onclick = function () {
 
             create_form('', symbols)
-            }
+
+            $('.js-select2').select2({
+                placeholder: "Выберите город",
+                maximumSelectionLength: 2,
+                language: "ru"
+            });
+        }
 
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
