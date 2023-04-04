@@ -14,7 +14,8 @@
             border-radius: 5px;
             width: 100px;
             max-width: 200px;
-            align-items: left;
+            position: absolute;
+            float: right;
         }
 
         #autoset {
@@ -114,7 +115,7 @@
             flex-wrap: nowrap;
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: left;
             font-size: 19px;
             justify-content: space-between;
             padding: 0px;
@@ -152,7 +153,7 @@
         <button name="stop" id="header_name">STOP</button>
         
         <button name="trend" id="header_name">TREND</button>        
-        <span style="margin: 0 12px;"></span><!-- added span with margin to create space between buttons -->
+        <span style="margin: 0 20px;"></span><!-- added span with margin to create space between buttons -->
     </form_header>
     <script>let tg = window.Telegram.WebApp;
         tg.expand();
