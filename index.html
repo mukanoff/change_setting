@@ -265,16 +265,16 @@
                 inputTrend.appendChild(option_trend);
             }
 
-            form.setAttribute("id", "form" + index + "-string");
+            form.setAttribute("id", "form." + index);
             inputSymbol.setAttribute("class", "js-select2");
             inputSymbol.setAttribute("placeholder", "symbols");
             inputSymbol.setAttribute("name", index);
             inputTrend.setAttribute("name", index);
             inputSymbol.setAttribute("id", "form." + index + ".symbol");
-            inputTrend.setAttribute("id", "form" + index + "-trend");
+            inputTrend.setAttribute("id", "form." + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + index + "-quantity");
+            inputQuantity.setAttribute("id", "form." + index + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             if (percent != 10) {
                 inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
@@ -285,21 +285,21 @@
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + index + "-aditional");
+            inputAditional.setAttribute("id", "form." + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
             else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + index + "-take");
+            inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
             if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
             else { inputTake.setAttribute("value", dic_work[word]['take']) }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + index + "-stop");
+            inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
             if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
@@ -312,7 +312,7 @@
 
             
             buttonSubmit.innerHTML = "❌";
-            buttonSubmit.setAttribute("id", "form" + index + "-button");
+            buttonSubmit.setAttribute("id", "form." + index + "-button");
 
             form.appendChild(inputSymbol);
             form.appendChild(inputQuantity);
@@ -338,10 +338,10 @@
                 console.log(word);
                 console.log(symbols[word]['addition']);
                 console.log("form" + symbol_work + "-aditional");
-                document.getElementById("form" + symbol_work + "-aditional").value = symbols[word]['addition'];
+                document.getElementById("form." + symbol_work + "-aditional").value = symbols[word]['addition'];
                 //a.setAttribute("value", symbols[word]['addition']);
-                document.getElementById("form" + symbol_work + "-take").value = symbols[word]['take'];
-                document.getElementById("form" + symbol_work + "-trend").value = symbols[word]['trend'];
+                document.getElementById("form." + symbol_work + "-take").value = symbols[word]['take'];
+                document.getElementById("form." + symbol_work + "-trend").value = symbols[word]['trend'];
                 
             }
     
@@ -394,7 +394,7 @@
             forms.forEach(form => {
 
                 const set = form.id;
-                const symbol = document.getElementById(set + "-symbol").value;
+                const symbol = document.getElementById(set + ".symbol").value;
                 const quantity = document.getElementById(set + "-quantity").value;
                 const additional = document.getElementById(set + "-aditional").value;
                 const take = document.getElementById(set + "-take").value;
