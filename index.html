@@ -186,7 +186,10 @@
             dctnr = dic_param1.split('~');
             dctnr2 = dic_param2.split('~');
         }
-
+        function round_ten(number) {
+            number = Math.round(number * 100) / 100;
+            return number;
+        }
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
             dictionary[elem[0]] = {
@@ -200,8 +203,12 @@
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
-            addition = elem[1] / 20;
-            if (addition < 1) { addition = 1.1};
+            addition = round_ten(elem[1] / 20);
+            take = round_ten(addition*0.9);
+            if (addition < 1) {
+                addition = 1.1;
+                take = 1;
+            };
             trend = elem[4];
             quantity = Math.round(balance * 0.1);
             
@@ -217,10 +224,7 @@
                 'count': elem[3],
             }
         }
-
-        console.log(dictionary);
-        console.log(symbols);
-
+                
         let trend_dic = ['buy', 'sell', 'revers'];
         let form //= document.createElement("form");
         let inputSymbol //= document.createElement("select",);
@@ -383,11 +387,6 @@
                 i++
                 if (i < 3) { continue; };
                 create_form(sym, symbols, percent);
-                $('.js-select2').select2({
-                    placeholder: "Symbols",
-                    maximumSelectionLength: 5,
-                    language: "en"
-                });
                 if (i > (Number(settings) + 1)) { break };
             }
         }
