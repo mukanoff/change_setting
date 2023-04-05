@@ -383,6 +383,11 @@
                 i++
                 if (i < 3) { continue; };
                 create_form(sym, symbols, percent);
+                $('.js-select2').select2({
+                    placeholder: "Symbols",
+                    maximumSelectionLength: 5,
+                    language: "en"
+                });
                 if (i > (Number(settings) + 1)) { break };
             }
         }
