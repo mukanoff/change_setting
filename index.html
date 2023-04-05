@@ -14,24 +14,21 @@
             border-radius: 5px;
             width: 50px;
             max-width: 50px;
-            
         }
 
         #autoset {
             background-color: #fed5fd;
             border: 2px solid #808080;
             border-radius: 5px;
-            
         }
 
         #add {
             background-color: #fed5fd;
             border: 2px solid #808080;
             border-radius: 5px;
-            
         }
 
-        
+
         #header_name {
             background-color: Gainsboro;
             font-size: 13px;
@@ -148,13 +145,14 @@
         <button name="add" id="header_name">%</button>
         <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
         <button name="take" id="header_name">TAKE</button>
-        
+
         <button name="stop" id="header_name">STOP</button>
-        
-        <button name="trend" id="header_name">TREND</button>        
+
+        <button name="trend" id="header_name">TREND</button>
         <span style="margin: 0 22px;"></span><!-- added span with margin to create space between buttons -->
     </form_header>
-    <script>let tg = window.Telegram.WebApp;
+    <script>
+        let tg = window.Telegram.WebApp;
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
         tg.MainButton.textColor = "#000000";
@@ -170,13 +168,15 @@
         let symbols = {};
         let dctnr;
         let dctnr2;
+        let qnty = Math.round(balance * 0.1);
+        let index = 1;
 
         symbols[''] = {
-            'quantity': '1',
+            'quantity': qnty,
             'addition': '1',
             'take': '1',
-            'stop': '1',
-            'trend': '1',
+            'stop': qnty,
+            'trend': 'buy',
         }
 
         if (dic_param1 === null) {
@@ -201,29 +201,35 @@
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
             addition = elem[1] / 20;
+            if (addition < 1) { addition = 1.1};
             trend = elem[4];
-            quantity = balance * 0.1;
+            quantity = Math.round(balance * 0.1);
+            
             if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
                 'take': addition * 0.9,
-                'stop': '0',
+                'stop': quantity,
                 'trend': trend,
                 'koef': elem[2],
                 'count': elem[3],
             }
         }
 
-        let trend_dic = ['BUY', 'SELL', 'REVERS'];
-        let form = document.createElement("form");
-        let inputSymbol = document.createElement("select",);
-        let inputQuantity = document.createElement("input");
-        let inputAditional = document.createElement("input");
-        let inputTake = document.createElement("input");
-        let inputStop = document.createElement("input");
-        let inputTrend = document.createElement("select");
-        let buttonSubmit = document.createElement("button");
+        console.log(dictionary);
+        console.log(symbols);
+
+        let trend_dic = ['buy', 'sell', 'revers'];
+        let form //= document.createElement("form");
+        let inputSymbol //= document.createElement("select",);
+        let inputQuantity //= document.createElement("input");
+        let inputAditional //= document.createElement("input");
+        let inputTake //= document.createElement("input");
+        let inputStop //= document.createElement("input");
+        let inputTrend ///= document.createElement("select");
+        let buttonSubmit //= document.createElement("button");
 
         function create_form(word, dic_work, percent = 10) {
 
@@ -259,19 +265,19 @@
                 inputTrend.appendChild(option_trend);
             }
 
-            form.setAttribute("id", "form" + word);
+            form.setAttribute("id", "form" + index + "-string");
             inputSymbol.setAttribute("class", "js-select2");
-            inputSymbol.setAttribute("placeholder", "Выберите город");
-            inputSymbol.setAttribute("name", word);
-            inputTrend.setAttribute("name", word);
-            inputSymbol.setAttribute("id", "form" + word + "-symbol");
-            inputTrend.setAttribute("id", "form" + word + "-trend");
+            inputSymbol.setAttribute("placeholder", "symbols");
+            inputSymbol.setAttribute("name", index);
+            inputTrend.setAttribute("name", index);
+            inputSymbol.setAttribute("id", "form." + index + ".symbol");
+            inputTrend.setAttribute("id", "form" + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + word + "-quantity");
+            inputQuantity.setAttribute("id", "form" + index + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            if (dic_work[word]['quantity'] === '0') {
-                inputQuantity.setAttribute("value", Math.round(balance*percent/100));
+            if (percent != 10) {
+                inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
                 inputQuantity.setAttribute("value", dic_work[word]['quantity']);
@@ -279,23 +285,23 @@
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + word + "-aditional");
+            inputAditional.setAttribute("id", "form" + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
             else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + word + "-take");
+            inputTake.setAttribute("id", "form" + index + "-take");
             inputTake.setAttribute("name", "Take");
             if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
             else { inputTake.setAttribute("value", dic_work[word]['take']) }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + word + "-stop");
+            inputStop.setAttribute("id", "form" + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            if (dic_work[word]['quantity'] === 0) {
+            if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
@@ -304,9 +310,9 @@
 
             inputStop.setAttribute("size", "2");
 
-            buttonSubmit.setAttribute("id", word);
+            
             buttonSubmit.innerHTML = "❌";
-            buttonSubmit.setAttribute("id", "form." + word);
+            buttonSubmit.setAttribute("id", "form" + index + "-button");
 
             form.appendChild(inputSymbol);
             form.appendChild(inputQuantity);
@@ -323,15 +329,23 @@
 
                 form.remove();
             }
-            inputSymbol.onchange = function (e) {
+
+            inputSymbol.onchange = async function (e) {
                 e.preventDefault();
-                symbol_work = e.target.id.split('-')[0];
-                console.log(e.target.id.split(' -')[0]);
+                symbol_work = e.target.id.split('.')[1];
+                console.log(e.target.id.split('.')[1]);
+                word = document.getElementById(e.target.id).value;
+                console.log(word);
+                console.log(symbols[word]['addition']);
+                console.log("form" + symbol_work + "-aditional");
                 document.getElementById("form" + symbol_work + "-aditional").value = symbols[word]['addition'];
+                //a.setAttribute("value", symbols[word]['addition']);
                 document.getElementById("form" + symbol_work + "-take").value = symbols[word]['take'];
                 document.getElementById("form" + symbol_work + "-trend").value = symbols[word]['trend'];
+                
             }
-
+    
+            index++;
         }
 
         for (var word in dictionary) {
@@ -343,15 +357,16 @@
             create_form('', symbols)
 
             $('.js-select2').select2({
-                placeholder: "Выберите город",
-                maximumSelectionLength: 2,
-                language: "ru"
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
             });
         }
 
+
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
-            if (settings.includes(',')){
+            if (settings.includes(',')) {
                 mass = settings.split(',');
                 settings = mass[0];
                 percent = mass[1];
@@ -392,12 +407,15 @@
         });
 
         $(document).ready(function () {
-           $('.js-select2').select2({
-               placeholder: "Выберите город",
-               maximumSelectionLength: 2,
-               language: "ru"
-           });
-        })</script>
+            $('.js-select2').select2({
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
+            });
+
+        
+        })
+    </script>
 
 </body>
 </html>
