@@ -188,6 +188,7 @@
         }
         function round_ten(number) {
             number = Math.round(number * 100) / 100;
+            console.log(number)
             return number;
         }
         for (var jj in dctnr) {
@@ -217,7 +218,7 @@
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
-                'take': addition * 0.9,
+                'take': take,
                 'stop': quantity,
                 'trend': trend,
                 'koef': elem[2],
