@@ -323,6 +323,14 @@
 
                 form.remove();
             }
+            inputSymbol.onchange = function (e) {
+                e.preventDefault();
+                symbol_work = e.target.id.split('-')[0];
+                console.log(e.target.id.split(' -')[0]);
+                document.getElementById("form" + symbol_work + "-aditional").value = symbols[word]['addition'];
+                document.getElementById("form" + symbol_work + "-take").value = symbols[word]['take'];
+                document.getElementById("form" + symbol_work + "-trend").value = symbols[word]['trend'];
+            }
 
         }
 
