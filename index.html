@@ -209,7 +209,7 @@
             var elem = dctnr2[jj].split('-');
             addition = elem[1] / 20;
             trend = elem[4];
-            quantity = Math.round(balance * 0.1);
+            quantity = balance * 0.1;
             if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
             symbols[elem[0]] = {
                 'quantity': quantity,
