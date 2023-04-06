@@ -8,16 +8,6 @@
     <title>Настройки</title>
     <style>
 
-        .select2-results__option {
-            color: black;
-            font-size: 14px;
-        }
-
-        .select2 {
-            font-size: 14px;
-        }
-
-
         #auto_set {
             background-color: #91c1ec;
             border: 2px solid #808080;
@@ -46,7 +36,6 @@
 
         input:focus {
             border: 2px solid DarkGray;
-            font-size: 14px;
         }
 
         body {
@@ -75,7 +64,7 @@
             /*background: var(--tg-theme-button-color);*/
             /*color: var(--tg-theme-button-text-color);*/
             border: 0px solid #808080;
-            font-size: 14px;
+            font-size: 15px;
             background-color: White;
             min-width: 20px;
             max-width: 38px;
@@ -88,7 +77,7 @@
             /*background: var(--tg-theme-button-color);*/
             /*color: var(--tg-theme-button-text-color);*/
             border: none;
-            font-size: 14px;
+            font-size: 15px;
             min-width: 40px;
             max-width: 90px;
             width: auto;
@@ -105,7 +94,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            font-size: 14px;
+            font-size: 15px;
             justify-content: space-between;
             padding: 0px;
             /*border: 1px solid #000;*/
@@ -163,7 +152,7 @@
         <span style="margin: 0 22px;"></span><!-- added span with margin to create space between buttons -->
     </form_header>
     <script>
-    let tg = window.Telegram.WebApp;
+        let tg = window.Telegram.WebApp;
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
         tg.MainButton.textColor = "#000000";
@@ -172,19 +161,22 @@
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param1 = urlParams.get('set');
         var dic_param2 = urlParams.get('scrn');
+        var connector = urlParams.get('c');
+        var robot = urlParams.get('r');
         var balance = urlParams.get('b');
         var dictionary = {};
         let symbols = {};
         let dctnr;
         let dctnr2;
-        let quantity = balance * 0.1;
+        let qnty = Math.round(balance * 0.1);
+        let index = 1;
 
         symbols[''] = {
-            'quantity': quantity,
-            'addition': '1.1',
+            'quantity': qnty,
+            'addition': '1',
             'take': '1',
-            'stop': quantity,
-            'trend': '1',
+            'stop': qnty,
+            'trend': 'buy',
         }
 
         if (dic_param1 === null) {
@@ -194,7 +186,11 @@
             dctnr = dic_param1.split('~');
             dctnr2 = dic_param2.split('~');
         }
-
+        function round_ten(number) {
+            number = Math.round(number * 100) / 100;
+            console.log(number)
+            return number;
+        }
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
             dictionary[elem[0]] = {
@@ -208,30 +204,37 @@
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
-            addition = elem[1] / 20;
-            trend = elem[4];
-            quantity = balance * 0.1;
-            if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            addition = round_ten(elem[1] / 20);
+            take = round_ten(addition*0.9);
+            if (addition < 1) {
+                addition = 1.1;
+                take = 1;
+            };
+            trend = elem[2];
+            quantity = Math.round(balance * 0.1);
+            
+            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
-                'take': addition * 0.9,
+                'take': take,
                 'stop': quantity,
                 'trend': trend,
-                'koef': elem[2],
-                'count': elem[3],
+                //'koef': elem[2],
+                //'count': elem[3],
             }
         }
-
+                
         let trend_dic = ['buy', 'sell', 'revers'];
-        let form = document.createElement("form");
-        let inputSymbol = document.createElement("select",);
-        let inputQuantity = document.createElement("input");
-        let inputAditional = document.createElement("input");
-        let inputTake = document.createElement("input");
-        let inputStop = document.createElement("input");
-        let inputTrend = document.createElement("select");
-        let buttonSubmit = document.createElement("button");
+        let form //= document.createElement("form");
+        let inputSymbol //= document.createElement("select",);
+        let inputQuantity //= document.createElement("input");
+        let inputAditional //= document.createElement("input");
+        let inputTake //= document.createElement("input");
+        let inputStop //= document.createElement("input");
+        let inputTrend ///= document.createElement("select");
+        let buttonSubmit //= document.createElement("button");
 
         function create_form(word, dic_work, percent = 10) {
 
@@ -267,18 +270,18 @@
                 inputTrend.appendChild(option_trend);
             }
 
-            form.setAttribute("id", "form" + word);
+            form.setAttribute("id", "form." + index);
             inputSymbol.setAttribute("class", "js-select2");
-            inputSymbol.setAttribute("placeholder", "Выберите город");
-            inputSymbol.setAttribute("name", word);
-            inputTrend.setAttribute("name", word);
-            inputSymbol.setAttribute("id", "form" + word + "-symbol");
-            inputTrend.setAttribute("id", "form" + word + "-trend");
+            inputSymbol.setAttribute("placeholder", "symbols");
+            inputSymbol.setAttribute("name", index);
+            inputTrend.setAttribute("name", index);
+            inputSymbol.setAttribute("id", "form." + index + ".symbol");
+            inputTrend.setAttribute("id", "form." + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + word + "-quantity");
+            inputQuantity.setAttribute("id", "form." + index + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            if (dic_work[word]['quantity'] === 0) {
+            if (percent != 10) {
                 inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
@@ -287,23 +290,23 @@
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + word + "-aditional");
+            inputAditional.setAttribute("id", "form." + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
             else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + word + "-take");
+            inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
             if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
             else { inputTake.setAttribute("value", dic_work[word]['take']) }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + word + "-stop");
+            inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            if (dic_work[word]['quantity'] === 0) {
+            if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
@@ -312,9 +315,9 @@
 
             inputStop.setAttribute("size", "2");
 
-            buttonSubmit.setAttribute("id", word);
+            
             buttonSubmit.innerHTML = "❌";
-            buttonSubmit.setAttribute("id", "form." + word);
+            buttonSubmit.setAttribute("id", "form." + index + "-button");
 
             form.appendChild(inputSymbol);
             form.appendChild(inputQuantity);
@@ -332,6 +335,21 @@
                 form.remove();
             }
 
+            inputSymbol.onchange = async function (e) {
+                e.preventDefault();
+                symbol_work = e.target.id.split('.')[1];
+                console.log(e.target.id.split('.')[1]);
+                word = document.getElementById(e.target.id).value;
+                console.log(word);
+                console.log(symbols[word]['addition']);
+                console.log("form" + symbol_work + "-aditional");
+                document.getElementById("form." + symbol_work + "-aditional").value = symbols[word]['addition'];
+                document.getElementById("form." + symbol_work + "-take").value = symbols[word]['take'];
+                document.getElementById("form." + symbol_work + "-trend").value = symbols[word]['trend'];
+                
+            }
+    
+            index++;
         }
 
         for (var word in dictionary) {
@@ -343,13 +361,12 @@
             create_form('', symbols)
 
             $('.js-select2').select2({
-                placeholder: "symbol",
-                maximumSelectionLength: 2,
-                language: "ru",
-                width: '100px'
-
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
             });
         }
+
 
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
@@ -381,7 +398,7 @@
             forms.forEach(form => {
 
                 const set = form.id;
-                const symbol = document.getElementById(set + "-symbol").value;
+                const symbol = document.getElementById(set + ".symbol").value;
                 const quantity = document.getElementById(set + "-quantity").value;
                 const additional = document.getElementById(set + "-aditional").value;
                 const take = document.getElementById(set + "-take").value;
@@ -395,13 +412,14 @@
 
         $(document).ready(function () {
             $('.js-select2').select2({
-                placeholder: "symbol",
-                maximumSelectionLength: 2,
-                language: "ru",
-                width: '100px'
-
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
             });
-        })</script>
+
+        
+        })
+    </script>
 
 </body>
 </html>
