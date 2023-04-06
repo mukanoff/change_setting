@@ -12,36 +12,33 @@
             color: black;
             font-size: 14px;
         }
-        
-        .select2 {            
+
+        .select2 {
             font-size: 14px;
         }
-        
-       
+
+
         #auto_set {
             background-color: #91c1ec;
             border: 2px solid #808080;
             border-radius: 5px;
             width: 50px;
             max-width: 50px;
-            
         }
 
         #autoset {
             background-color: #fed5fd;
             border: 2px solid #808080;
             border-radius: 5px;
-            
         }
 
         #add {
             background-color: #fed5fd;
             border: 2px solid #808080;
             border-radius: 5px;
-            
         }
 
-        
+
         #header_name {
             background-color: Gainsboro;
             font-size: 13px;
@@ -159,13 +156,14 @@
         <button name="add" id="header_name">%</button>
         <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
         <button name="take" id="header_name">TAKE</button>
-        
+
         <button name="stop" id="header_name">STOP</button>
-        
-        <button name="trend" id="header_name">TREND</button>        
+
+        <button name="trend" id="header_name">TREND</button>
         <span style="margin: 0 22px;"></span><!-- added span with margin to create space between buttons -->
     </form_header>
-    <script>let tg = window.Telegram.WebApp;
+    <script>
+    let tg = window.Telegram.WebApp;
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
         tg.MainButton.textColor = "#000000";
@@ -211,20 +209,20 @@
             var elem = dctnr2[jj].split('-');
             addition = elem[1] / 20;
             trend = elem[4];
-            quantity = balance * 0, 1;
-            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            quantity = Math.round(balance * 0.1);
+            if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
                 'take': addition * 0.9,
-                'stop': '0',
+                'stop': quantity,
                 'trend': trend,
                 'koef': elem[2],
                 'count': elem[3],
             }
         }
 
-        let trend_dic = ['BUY', 'SELL', 'REVERS'];
+        let trend_dic = ['buy', 'sell', 'revers'];
         let form = document.createElement("form");
         let inputSymbol = document.createElement("select",);
         let inputQuantity = document.createElement("input");
@@ -280,7 +278,7 @@
             inputQuantity.setAttribute("id", "form" + word + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
             if (dic_work[word]['quantity'] === 0) {
-                inputQuantity.setAttribute("value", Math.round(balance*percent/100));
+                inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
                 inputQuantity.setAttribute("value", dic_work[word]['quantity']);
@@ -348,13 +346,13 @@
                 maximumSelectionLength: 2,
                 language: "ru",
                 width: '100px'
-                
-            });           
+
+            });
         }
 
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
-            if (settings.includes(',')){
+            if (settings.includes(',')) {
                 mass = settings.split(',');
                 settings = mass[0];
                 percent = mass[1];
@@ -395,13 +393,13 @@
         });
 
         $(document).ready(function () {
-           $('.js-select2').select2({
-               placeholder: "symbol",
-               maximumSelectionLength: 2,
-               language: "ru",
-               width: '100px'
-             
-           });           
+            $('.js-select2').select2({
+                placeholder: "symbol",
+                maximumSelectionLength: 2,
+                language: "ru",
+                width: '100px'
+
+            });
         })</script>
 
 </body>
