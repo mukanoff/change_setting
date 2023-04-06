@@ -163,6 +163,8 @@
         const urlParams = new URLSearchParams(window.location.search);
         var dic_param1 = urlParams.get('set');
         var dic_param2 = urlParams.get('scrn');
+        var connector = urlParams.get('c');
+        var robot = urlParams.get('r');
         var balance = urlParams.get('b');
         var dictionary = {};
         let symbols = {};
@@ -200,8 +202,8 @@
             var elem = dctnr2[jj].split('-');
             addition = elem[1] / 20;
             trend = elem[4];
-            quantity = balance * 0, 1;
-            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            quantity = balance * 0.1;
+            if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
@@ -268,7 +270,7 @@
             inputQuantity.setAttribute("type", "text");
             inputQuantity.setAttribute("id", "form" + word + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            if (dic_work[word]['quantity'] === 0) {
+            if (dic_work[word]['quantity'] === '0') {
                 inputQuantity.setAttribute("value", Math.round(balance*percent/100));
             }
             else {
