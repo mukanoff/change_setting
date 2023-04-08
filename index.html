@@ -176,6 +176,7 @@
         let dctnr2;
         let qnty = Math.round(balance * 0.1);
         let index = 1;
+        let trend_dic = ['buy', 'sell', 'revers', 'BUY','SELL','REVERSE'];
 
         symbols[''] = {
             'quantity': qnty,
@@ -231,8 +232,7 @@
                 //'count': elem[3],
             }
         }
-                
-        let trend_dic = ['buy', 'sell', 'revers'];
+               
         let form //= document.createElement("form");
         let inputSymbol //= document.createElement("select",);
         let inputQuantity //= document.createElement("input");
