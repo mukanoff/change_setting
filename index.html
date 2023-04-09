@@ -176,7 +176,7 @@
         let dctnr2;
         let qnty = Math.round(balance * 0.1);
         let index = 1;
-        let trend_dic = ['buy', 'sell', 'revers', 'BUY','SELL','REVERSE'];
+        let trend_dic = ['buy', 'sell', 'reverse'];
 
         symbols[''] = {
             'quantity': qnty,
@@ -205,7 +205,7 @@
                 'addition': elem[2],
                 'take': elem[3],
                 'stop': elem[4],
-                'trend': elem[5],
+                'trend': elem[5].toLowerCase(),
             }
         }
 
