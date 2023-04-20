@@ -8,11 +8,6 @@
     <title>Настройки</title>
     <style>
 
-         .select2-results__option {
-            color: black;
-            font-size: 14px;
-        }
-        
         #auto_set {
             background-color: #91c1ec;
             border: 2px solid #808080;
@@ -69,7 +64,7 @@
             /*background: var(--tg-theme-button-color);*/
             /*color: var(--tg-theme-button-text-color);*/
             border: 0px solid #808080;
-            font-size: 14px;
+            font-size: 15px;
             background-color: White;
             min-width: 20px;
             max-width: 38px;
@@ -82,7 +77,7 @@
             /*background: var(--tg-theme-button-color);*/
             /*color: var(--tg-theme-button-text-color);*/
             border: none;
-            font-size: 14px;
+            font-size: 15px;
             min-width: 40px;
             max-width: 90px;
             width: auto;
@@ -104,7 +99,7 @@
             padding: 0px;
             /*border: 1px solid #000;*/
             border-radius: 5px;
-            box-shadow: 0 0 8px Plum;
+            box-shadow: 0 0 8px #C0C0C0;
             margin: 4px;
             max-width: 100%;
         }
@@ -131,21 +126,20 @@
     </style>
 </head>
 <body>
-    <h1 style="margin-top:0; display:inline-block;">Binance</h1>
-    <h2 style="margin-top:0; display:inline-block;"> StepByStep Settings</h2>
+    <h1 id="connector"; style="margin-top:0; display:inline-block;">Binance</h1>
+    <h2 id="robot"; style="margin-top:0; display:inline-block;"> StepByStep Settings</h2>
 
     <div>
         <input type="text" id="auto_set" placeholder="1-15" />
         <button name="autoset" id="autoset"><b>AutoSettings</b></button>
-        <span style="margin: 0 38px;"></span> <!-- added span with margin to create space between buttons -->
+        <span style="margin: 0 50px;"></span> <!-- added span with margin to create space between buttons -->
         <button name="add" id="add"><b>Add NEW</b></button>
 
 
     </div>
-    <form_header style="justify-content: space-evenly;">
-        <span style="margin: 0 1px;"></span><!-- added span with margin to create space between buttons -->
+    <form_header id="aaaaaaa" style="justify-content: space-evenly;">
         <button name="Symbol" id="header_name">SYMBOL</button>
-        <span style="margin: 0 10px;"></span><!-- added span with margin to create space between buttons -->
+        <span style="margin: 0 6px;"></span><!-- added span with margin to create space between buttons -->
         <button name="Vol" id="header_name">VOL</button>
         <span style="margin: 0 8px;"></span><!-- added span with margin to create space between buttons -->
         <button name="add" id="header_name">%</button>
@@ -155,7 +149,7 @@
         <button name="stop" id="header_name">STOP</button>
 
         <button name="trend" id="header_name">TREND</button>
-        <span style="margin: 0 9px;"></span><!-- added span with margin to create space between buttons -->
+        <span style="margin: 0 22px;"></span><!-- added span with margin to create space between buttons -->
     </form_header>
     <script>
         let tg = window.Telegram.WebApp;
@@ -168,7 +162,9 @@
         var dic_param1 = urlParams.get('set');
         var dic_param2 = urlParams.get('scrn');
         var connector = urlParams.get('c');
+        connector = connector[0].toLocaleUpperCase() + connector.slice(1)
         var robot = urlParams.get('r');
+        robot = robot[0].toLocaleUpperCase() + robot.slice(1)
         var balance = urlParams.get('b');
         var dictionary = {};
         let symbols = {};
@@ -176,8 +172,23 @@
         let dctnr2;
         let qnty = Math.round(balance * 0.1);
         let index = 1;
-        let trend_dic = ['buy', 'sell', 'reverse'];
 
+        document.getElementById("connector").innerHTML = connector;
+        document.getElementById("connector").setAttribute("style", "margin-top:0; display:inline-block;");
+        document.getElementById("robot").innerHTML = robot + ' Setup';
+        document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
+
+
+        if (robot != 'stepbystep') {
+            var buttons = document.getElementsByTagName('button');
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i]; 
+                if (button.textContent == "%") { button.textContent = "TAKE" }
+                else if (button.textContent == "TAKE") { button.textContent = "STOP" }
+                else if (button.textContent == "STOP") { button.textContent = "INTERVAL" }
+            }
+            }
+        
         symbols[''] = {
             'quantity': qnty,
             'addition': '1',
@@ -195,7 +206,6 @@
         }
         function round_ten(number) {
             number = Math.round(number * 100) / 100;
-            console.log(number)
             return number;
         }
         for (var jj in dctnr) {
@@ -205,36 +215,32 @@
                 'addition': elem[2],
                 'take': elem[3],
                 'stop': elem[4],
-                'trend': elem[5].toLowerCase(),
+                'trend': elem[5],
             }
         }
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
             addition = round_ten(elem[1] / 20);
-            take = round_ten(addition*0.9);
+            take = round_ten(addition * 0.9);
             if (addition < 1) {
                 addition = 1.1;
                 take = 1;
             };
             trend = elem[2];
             quantity = Math.round(balance * 0.1);
-            
-            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
-            
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
                 'take': take,
                 'stop': quantity,
                 'trend': trend,
-                //'koef': elem[2],
-                //'count': elem[3],
             }
         }
-               
-        let form //= document.createElement("form");
-        let inputSymbol //= document.createElement("select",);
+
+        let trend_dic = ['buy', 'sell', 'revers', 'BUY', 'SELL', 'REVERSE'];
+        let form 
+        let inputSymbol 
         let inputQuantity //= document.createElement("input");
         let inputAditional //= document.createElement("input");
         let inputTake //= document.createElement("input");
@@ -321,7 +327,7 @@
 
             inputStop.setAttribute("size", "2");
 
-            
+
             buttonSubmit.innerHTML = "❌";
             buttonSubmit.setAttribute("id", "form." + index + "-button");
 
@@ -352,9 +358,9 @@
                 document.getElementById("form." + symbol_work + "-aditional").value = symbols[word]['addition'];
                 document.getElementById("form." + symbol_work + "-take").value = symbols[word]['take'];
                 document.getElementById("form." + symbol_work + "-trend").value = symbols[word]['trend'];
-                
+
             }
-    
+
             index++;
         }
 
@@ -369,8 +375,7 @@
             $('.js-select2').select2({
                 placeholder: "Symbols",
                 maximumSelectionLength: 5,
-                language: "en",
-                width: '105px'
+                language: "en"
             });
         }
 
@@ -421,11 +426,10 @@
             $('.js-select2').select2({
                 placeholder: "Symbols",
                 maximumSelectionLength: 5,
-                language: "en",
-                width: '105px'
+                language: "en"
             });
 
-        
+
         })
     </script>
 
