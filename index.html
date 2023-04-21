@@ -182,8 +182,8 @@
         symbols[''] = {
             'quantity': qnty,
             'addition': '1',
-            'take': '1',
-            'stop': qnty,
+            'take': '2',
+            'stop': '5',
             'trend': 'buy',
         }
 
@@ -306,7 +306,7 @@
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            inputStop.setAttribute("value", 5);
+            inputStop.setAttribute("value", dic_work[word]['stop']);
 
             inputStop.setAttribute("size", "2");
 
