@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -7,6 +7,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <title>Настройки</title>
     <style>
+
+        #auto_set {
+            background-color: #91c1ec;
+            border: 2px solid #808080;
+            border-radius: 5px;
+            width: 50px;
+            max-width: 50px;
+        }
+
+        #autoset {
+            background-color: #fed5fd;
+            border: 2px solid #808080;
+            border-radius: 5px;
+        }
+
+        #add {
+            background-color: #fed5fd;
+            border: 2px solid #808080;
+            border-radius: 5px;
+        }
+
+
+        #header_name {
+            background-color: Gainsboro;
+            font-size: 13px;
+        }
+
+        input:focus {
+            border: 2px solid DarkGray;
+        }
+
         body {
             color: var(--tg-theme-text-color);
             background: var(--tg-theme-bg-color);
@@ -18,73 +49,158 @@
         }
 
         button {
-            background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
             border: none;
             font-size: 15px;
+            width: auto;
         }
 
         input {
-            background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
+            border: 0px solid #808080;
             font-size: 15px;
+            background-color: White;
+            min-width: 20px;
+            max-width: 38px;
+            width: auto;
         }
 
         select {
-            background: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
             border: none;
-            font-size: 15px;
+            font-size: 14px;
+            min-width: 40px;
+            max-width: 105px;
+            width: auto;
+            -webkit-appearance: none;
         }
+
+
 
         form {
             color: var(--tg-theme-text-color);
-            background: var(--tg-theme-bg-color);
+            background: White;
+            /*background: var(--tg-theme-bg-color);*/
             flex-wrap: nowrap;
             display: flex;
             flex-direction: row;
             align-items: center;
             font-size: 15px;
+            justify-content: space-between;
+            padding: 0px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px #800080;
+            margin: 4px;
+            max-width: 100%;
+        }
+
+        form_header {
+            color: Black;
+            background: Gainsboro;
+            /*background: var(--tg-theme-bg-color);*/
+            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-size: 19px;
+            justify-content: space-between;
+            padding: 0px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px #C0C0C0;
+            margin: 4px;
+            /*width: 100%;*/
+            max-width: 100%;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>Settings</h1>
-    
-    <button name="test" id="test">test</button>
+    <h1 id="connector"; style="margin-top:0; display:inline-block;">Binance</h1>
+    <h2 id="robot"; style="margin-top:0; display:inline-block;"> StepByStep Settings</h2>
+
     <div>
-        <input type="text" id="auto_set" />
-        <button name="autoset" id="autoset">AutoSettings</button>
-        <button name="add" id="add">Add NEW</button>
+        <input type="text" id="auto_set" placeholder="1-15" />
+        <button name="autoset" id="autoset"><b>AutoSettings</b></button>
+        <span style="margin: 0 50px;"></span> <!-- added span with margin to create space between buttons -->
+        <button name="add" id="add"><b>Add NEW</b></button>
+
 
     </div>
+    <form_header id="aaaaaaa" style="justify-content: space-evenly;">
+        <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Symbol" id="header_name">SYMBOL</button>
+        <span style="margin: 0 10px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Vol" id="header_name">VOL</button>
+        <span style="margin: 0 8px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="add" id="header_name">%</button>
+        <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="take" id="header_name">TAKE</button>
 
+        <button name="stop" id="header_name">STOP</button>
+
+        <button name="trend" id="header_name">TREND</button>
+        <span style="margin: 0 12px;"></span><!-- added span with margin to create space between buttons -->
+    </form_header>
     <script>
-
         let tg = window.Telegram.WebApp;
         tg.expand();
         tg.MainButton.text = "Отправить настройки";
-        tg.MainButton.textColor = "#F55353";
-        tg.MainButton.color = "#143F6B";
+        tg.MainButton.textColor = "#000000";
+        tg.MainButton.color = "#4169E1";
         tg.MainButton.show();
         const urlParams = new URLSearchParams(window.location.search);
-        var dic_param1 = urlParams.get('param1');
-        var dic_param2 = urlParams.get('param2');
-        var balance = urlParams.get('param3');
+        var dic_param1 = urlParams.get('set');
+        var dic_param2 = urlParams.get('scrn');
+        var connector = urlParams.get('c');
+        connector = connector[0].toLocaleUpperCase() + connector.slice(1)
+        var robot = urlParams.get('r');
+        robot = robot[0].toLocaleUpperCase() + robot.slice(1)
+        var balance = urlParams.get('b');
         var dictionary = {};
         let symbols = {};
         let dctnr;
         let dctnr2;
+        let qnty = Math.round(balance * 0.1);
+        let index = 1;
 
+        document.getElementById("connector").innerHTML = connector;
+        document.getElementById("connector").setAttribute("style", "margin-top:0; display:inline-block;");
+        document.getElementById("robot").innerHTML = robot + ' Setup';
+        document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
+
+
+        if (robot != 'Stepbystep') {
+            var buttons = document.getElementsByTagName('button');
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i]; 
+                if (button.textContent == "%") { button.textContent = "TAKE" }
+                else if (button.textContent == "TAKE") { button.textContent = "STOP" }
+                else if (button.textContent == "STOP") { button.textContent = "INTERVAL" }
+                
+                
+                
+            }
+            }
+        
         symbols[''] = {
-            'quantity': '1',
+            'quantity': qnty,
             'addition': '1',
             'take': '1',
-            'stop': '1',
-            'trend': '1',
+            'stop': qnty,
+            'trend': 'buy',
         }
-        
+
         if (dic_param1 === null) {
             dctnr = {};
             dctnr2 = {};
@@ -92,7 +208,10 @@
             dctnr = dic_param1.split('~');
             dctnr2 = dic_param2.split('~');
         }
-        
+        function round_ten(number) {
+            number = Math.round(number * 100) / 100;
+            return number;
+        }
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
             dictionary[elem[0]] = {
@@ -106,44 +225,32 @@
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
-            addition = elem[1] / 20;
-            trend = elem[4];
-            quantity = balance * 0, 1;
-            //if (trend.at(-1) === '_') { trend = trend.slice(0, -1) }
+            addition = round_ten(elem[1] / 20);
+            take = round_ten(addition * 0.9);
+            if (addition < 1) {
+                addition = 1.1;
+                take = 1;
+            };
+            trend = elem[2];
+            quantity = Math.round(balance * 0.1);
             symbols[elem[0]] = {
                 'quantity': quantity,
                 'addition': addition,
-                'take': addition * 0.9,
-                'stop': '0',
+                'take': take,
+                'stop': quantity,
                 'trend': trend,
-                'koef': elem[2],
-                'count': elem[3],
             }
         }
 
-        let all_trend = {
-            'buy': '🟢',
-            'sell': '🔴',
-            'sell_': '⬇️',
-            'buy_': '⬆️',
-        };
-        let all_star = {
-            '0': '🥉',
-            '1': '🥈',
-            '2': '🥇',
-            '3': '🥇',
-            '4': '🥇',
-            '5': '🥇',
-        };
-        let trend_dic = ['BUY', 'SELL', 'REVERS'];
-        let form = document.createElement("form");
-        let inputSymbol = document.createElement("select",);
-        let inputQuantity = document.createElement("input");
-        let inputAditional = document.createElement("input");
-        let inputTake = document.createElement("input");
-        let inputStop = document.createElement("input");
-        let inputTrend = document.createElement("select");
-        let buttonSubmit = document.createElement("button");
+        let trend_dic = ['buy', 'sell', 'reverse'];
+        let form 
+        let inputSymbol 
+        let inputQuantity //= document.createElement("input");
+        let inputAditional //= document.createElement("input");
+        let inputTake //= document.createElement("input");
+        let inputStop //= document.createElement("input");
+        let inputTrend ///= document.createElement("select");
+        let buttonSubmit //= document.createElement("button");
 
         function create_form(word, dic_work, percent = 10) {
 
@@ -158,13 +265,13 @@
 
             for (let item_symbol in symbols) {
                 let option_symbol = document.createElement("option");
-               
+
                 option_symbol.value = item_symbol;
-                
+
                 if (item_symbol == word) {
                     option_symbol.selected = true;
                 }
-                option_symbol.text = item_symbol; 
+                option_symbol.text = item_symbol;
                 inputSymbol.appendChild(option_symbol);
             }
 
@@ -179,18 +286,19 @@
                 inputTrend.appendChild(option_trend);
             }
 
-            form.setAttribute("id", "form" + word);
-            inputSymbol.setAttribute("class", "js-states form-control");
-            inputSymbol.setAttribute("name", word);
-            inputTrend.setAttribute("name", word);
-            inputSymbol.setAttribute("id", "form" + word + "-symbol");
-            inputTrend.setAttribute("id", "form" + word + "-trend");
+            form.setAttribute("id", "form." + index);
+            inputSymbol.setAttribute("class", "js-select2");
+            inputSymbol.setAttribute("placeholder", "symbols");
+            inputSymbol.setAttribute("name", index);
+            inputTrend.setAttribute("name", index);
+            inputSymbol.setAttribute("id", "form." + index + ".symbol");
+            inputTrend.setAttribute("id", "form." + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
-            inputQuantity.setAttribute("id", "form" + word + "-quantity");
+            inputQuantity.setAttribute("id", "form." + index + "-quantity");
             inputQuantity.setAttribute("name", "Quantity");
-            if (dic_work[word]['quantity'] === 0) {
-                inputQuantity.setAttribute("value", Math.round(balance*percent/100));
+            if (percent != 10) {
+                inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
                 inputQuantity.setAttribute("value", dic_work[word]['quantity']);
@@ -198,35 +306,35 @@
             inputQuantity.setAttribute("size", "2");
 
             inputAditional.setAttribute("type", "text");
-            inputAditional.setAttribute("id", "form" + word + "-aditional");
+            inputAditional.setAttribute("id", "form." + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
             if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
             else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
-            inputTake.setAttribute("id", "form" + word + "-take");
+            inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
             if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
             else { inputTake.setAttribute("value", dic_work[word]['take']) }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
-            inputStop.setAttribute("id", "form" + word + "-stop");
+            inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            if (dic_work[word]['quantity'] === 0) {
+            if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
                 inputStop.setAttribute("value", dic_work[word]['stop']);
             }
-            
+
             inputStop.setAttribute("size", "2");
 
-            buttonSubmit.setAttribute("id", word);
-            buttonSubmit.innerHTML = "Удалить";
-            buttonSubmit.setAttribute("id", "form." + word);
-                        
+
+            buttonSubmit.innerHTML = "❌";
+            buttonSubmit.setAttribute("id", "form." + index + "-button");
+
             form.appendChild(inputSymbol);
             form.appendChild(inputQuantity);
             form.appendChild(inputAditional);
@@ -239,10 +347,25 @@
             buttonSubmit.onclick = function (e) {
                 e.preventDefault();
                 const form = e.target.closest('form');
-                
+
                 form.remove();
             }
-            
+
+            inputSymbol.onchange = async function (e) {
+                e.preventDefault();
+                symbol_work = e.target.id.split('.')[1];
+                console.log(e.target.id.split('.')[1]);
+                word = document.getElementById(e.target.id).value;
+                console.log(word);
+                console.log(symbols[word]['addition']);
+                console.log("form" + symbol_work + "-aditional");
+                document.getElementById("form." + symbol_work + "-aditional").value = symbols[word]['addition'];
+                document.getElementById("form." + symbol_work + "-take").value = symbols[word]['take'];
+                document.getElementById("form." + symbol_work + "-trend").value = symbols[word]['trend'];
+
+            }
+
+            index++;
         }
 
         for (var word in dictionary) {
@@ -250,13 +373,20 @@
         }
 
         add.onclick = function () {
-                      
+
             create_form('', symbols)
-            }
+
+            $('.js-select2').select2({
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
+            });
+        }
+
 
         autoset.onclick = function (e) {
             let settings = document.getElementById('auto_set').value;
-            if (settings.includes(',')){
+            if (settings.includes(',')) {
                 mass = settings.split(',');
                 settings = mass[0];
                 percent = mass[1];
@@ -264,7 +394,7 @@
             else {
                 percent = 10;
             }
-            const forms = document.querySelectorAll('form');   
+            const forms = document.querySelectorAll('form');
             forms.forEach(form => {
                 form.remove();
             });
@@ -284,7 +414,7 @@
             forms.forEach(form => {
 
                 const set = form.id;
-                const symbol = document.getElementById(set + "-symbol").value;
+                const symbol = document.getElementById(set + ".symbol").value;
                 const quantity = document.getElementById(set + "-quantity").value;
                 const additional = document.getElementById(set + "-aditional").value;
                 const take = document.getElementById(set + "-take").value;
@@ -296,14 +426,16 @@
             tg.sendData(data);
         });
 
-        //$(document).ready(function () {
-        //    $('.js-select2').select2({
-        //        placeholder: "Выберите город",
-        //        maximumSelectionLength: 2,
-        //        language: "ru"
-        //    });
-        //})
+        $(document).ready(function () {
+            $('.js-select2').select2({
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
+            });
 
+
+        })
     </script>
+
 </body>
 </html>
