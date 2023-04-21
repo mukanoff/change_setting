@@ -143,11 +143,11 @@
         <span style="margin: 0 10px;"></span><!-- added span with margin to create space between buttons -->
         <button name="Vol" id="header_name">VOL</button>
         <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
-        <button name="add" id="header_name">%</button>
+        <button name="add" id="header_name">TAKE</button>
         <span style="margin: 0 0px;"></span><!-- added span with margin to create space between buttons -->
-        <button name="take" id="header_name">TAKE</button>
+        <button name="take" id="header_name">STOP</button>
 
-        <button name="stop" id="header_name">STOP</button>
+        <button name="stop" id="header_name">INTERVAL</button>
 
         <button name="trend" id="header_name">TREND</button>
         <span style="margin: 0 1px;"></span><!-- added span with margin to create space between buttons -->
@@ -178,21 +178,7 @@
         document.getElementById("connector").setAttribute("style", "margin-top:0; display:inline-block;");
         document.getElementById("robot").innerHTML = robot + ' Setup';
         document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
-
-
-        if (robot != 'Stepbystep') {
-            var buttons = document.getElementsByTagName('button');
-            for (var i = 0; i < buttons.length; i++) {
-                var button = buttons[i]; 
-                if (button.textContent == "%") { button.textContent = "TAKE" }
-                else if (button.textContent == "TAKE") { button.textContent = "STOP" }
-                else if (button.textContent == "STOP") { button.textContent = "INTERVAL" }
-                
-                
-                
-            }
-            }
-        
+   
         symbols[''] = {
             'quantity': qnty,
             'addition': '1',
@@ -315,19 +301,19 @@
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
-            if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
-            else { inputTake.setAttribute("value", dic_work[word]['take']) }
+            if (percent != 10) {
+                inputTake.setAttribute("value", Math.round(balance * percent / 100));
+            }
+            else {
+                inputTake.setAttribute("value", dic_work[word]['stop']);
+            }
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            if (percent != 10) {
-                inputStop.setAttribute("value", Math.round(balance * percent / 100));
-            }
-            else {
-                inputStop.setAttribute("value", dic_work[word]['stop']);
-            }
+            inputStop.setAttribute("value", 5);
+            
 
             inputStop.setAttribute("size", "2");
 
