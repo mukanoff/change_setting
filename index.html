@@ -212,10 +212,10 @@
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
             addition = round_ten(elem[1] / 20);
-            take = round_ten(addition * 0.9);
+            take = round_ten(addition * 2);
             if (addition < 1) {
-                addition = 1.1;
-                take = 1;
+                addition = 1;
+                take = 2;
             };
             trend = elem[2];
             quantity = Math.round(balance * 0.1);
@@ -223,7 +223,7 @@
                 'quantity': quantity,
                 'addition': addition,
                 'take': take,
-                'stop': quantity,
+                'stop': 5,
                 'trend': trend,
             }
         }
@@ -294,19 +294,13 @@
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form." + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
-            if (percent != 10) {
-                inputTake.setAttribute("value", Math.round(balance * percent / 100));
-            }
-            else {
-                inputTake.setAttribute("value", dic_work[word]['stop']);
-            }
+            inputAditional.setAttribute("value", dic_work[word]['additional']);
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
-            if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
-            else { inputTake.setAttribute("value", dic_work[word]['take']) }
+            inputTake.setAttribute("value", dic_work[word]['take'])
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
