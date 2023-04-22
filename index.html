@@ -221,7 +221,7 @@
                 'addition': elem[2],
                 'take': elem[3],
                 'stop': elem[4],
-                'trend': elem[5].toLocaleUpperCase(),
+                'trend': elem[5].toLocaleLowerCase(),
             }
         }
 
@@ -246,7 +246,7 @@
 
                 };
             }
-            trend = elem[2];
+            trend = elem[2].toLocaleLowerCase();
             quantity = Math.round(balance * 0.1);
             symbols[elem[0]] = {
                 'quantity': qnty,
