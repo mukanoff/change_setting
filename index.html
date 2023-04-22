@@ -8,10 +8,6 @@
     <title>Настройки</title>
     <style>
 
-        .select2-selection__rendered {
-            color: #000;
-        }
-        
         #auto_set {
             background-color: #91c1ec;
             border: 2px solid #808080;
@@ -88,7 +84,7 @@
             -webkit-appearance: none;
         }
 
-        
+
 
         form {
             color: var(--tg-theme-text-color);
@@ -178,6 +174,7 @@
         let index = 1;
         let min_qnty;
         let take;
+        let stop;
         
 
         document.getElementById("connector").innerHTML = connector;
@@ -204,13 +201,7 @@
 
         if (qnty < min_qnty) { qnty = min_qnty };
 
-        symbols[''] = {
-            'quantity': qnty,
-            'addition': '1',
-            'take': '2',
-            'stop': qnty,
-            'trend': 'buy',
-        }
+
 
         if (dic_param1 === null) {
             dctnr = {};
@@ -243,6 +234,7 @@
                 if (addition < 1) {
                     addition = 1.1;
                     take = 1;
+                    stop = qnty;
                 };
             }
             else {
@@ -250,6 +242,8 @@
                 if (addition < 1) {
                     addition = 1;
                     take = 2;
+                    stop = 5
+
                 };
             }
             trend = elem[2];
@@ -258,11 +252,20 @@
                 'quantity': qnty,
                 'addition': addition,
                 'take': take,
-                'stop': 5,
+                'stop': stop,
                 'trend': trend,
             }
         }
 
+        symbols[''] = {
+            'quantity': qnty,
+            'addition': '1',
+            'take': '2',
+            'stop': stop,
+            'trend': 'buy',
+        }
+        console.log(symbols)
+        console.log(dictionary)
         let trend_dic = ['buy', 'sell', 'reverse'];
         let form 
         let inputSymbol 
@@ -329,15 +332,13 @@
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form." + index + "-aditional");
             inputAditional.setAttribute("name", "Aditional");
-            if (dic_work[word]['addition'] < 1) { inputAditional.setAttribute("value", 1.1) }
-            else { inputAditional.setAttribute("value", dic_work[word]['addition']) }
+            inputAditional.setAttribute("value", dic_work[word]['addition'])
             inputAditional.setAttribute("size", "2");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
-            if (dic_work[word]['take'] < 1) { inputTake.setAttribute("value", 1) }
-            else { inputTake.setAttribute("value", dic_work[word]['take']) }
+            inputTake.setAttribute("value", dic_work[word]['take']) 
             inputTake.setAttribute("size", "2");
 
             inputStop.setAttribute("type", "text");
@@ -347,7 +348,7 @@
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
-                inputStop.setAttribute("value", dic_work[word]['stop']);
+                inputStop.setAttribute("value", Math.round(dic_work[word]['stop']));
             }
 
             inputStop.setAttribute("size", "2");
@@ -395,7 +396,7 @@
 
             $('.js-select2').select2({
                 placeholder: "Symbols",
-                maximumSelectionLength: 5,                
+                maximumSelectionLength: 5,
                 language: "en"
             });
         }
@@ -446,7 +447,7 @@
         $(document).ready(function () {
             $('.js-select2').select2({
                 placeholder: "Symbols",
-                maximumSelectionLength: 5,                
+                maximumSelectionLength: 5,
                 language: "en"
             });
 
