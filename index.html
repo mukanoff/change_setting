@@ -200,7 +200,7 @@
 
         if (connector == 'Binance') { min_qnty = 8 }
         else if (connector == 'Bybit') { min_qnty = 2 }
-        qnty = balance * 0.1;
+        qnty = Math.round(balance * 0.1);
 
         if (qnty < min_qnty) { qnty = min_qnty };
 
