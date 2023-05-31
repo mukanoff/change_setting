@@ -459,10 +459,9 @@
             forms.forEach(form => {
                 form.remove();
             });
-            let i = 0;
+            let i = 1;
             for (let sym in symbols) {
                 i++
-               // if (i < 3) { continue; };
                 create_form(sym, symbols, percent);
                 if (i > (Number(settings))) { break };
             }
