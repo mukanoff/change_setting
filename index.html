@@ -387,13 +387,25 @@
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
-            if (percent != 10) {
+            /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
             else {
                 inputStop.setAttribute("value", Math.round(dic_work[word]['quantity']));
-            }
+            }*/
 
+
+            if (percent !== 10) {
+                inputStop.setAttribute("value", Math.round(balance * percent / 100));
+            } else {
+                const stopValue = dic_work[word]['stop'];
+                if (!isNaN(stopValue) && typeof stopValue === 'number') {
+                    inputStop.setAttribute("value", Math.round(stopValue));
+                } else {
+                    inputStop.setAttribute("value", Math.round(dic_work[word]['quantity']));
+                }
+            }
+            
             inputStop.setAttribute("size", "2");
 
 
