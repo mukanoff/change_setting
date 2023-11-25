@@ -399,7 +399,7 @@
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             } else {
                 const stopValue = dic_work[word]['stop'];
-                if (!isNaN(stopValue) && typeof stopValue === 'number') {
+                if (!isNaN(stopValue) ) {
                     inputStop.setAttribute("value", Math.round(stopValue));
                 } else {
                     inputStop.setAttribute("value", Math.round(dic_work[word]['quantity']));
