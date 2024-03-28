@@ -344,6 +344,8 @@
         let stop;
         let once;
         let pause;
+        let reduce;
+        let lock;
         
 
         document.getElementById("connector").innerHTML = connector;
@@ -395,7 +397,22 @@
             if (elem[7] == 'TRUE'){
                 var flagpause = true
             }
-            else {flagpause = false}
+            if (elem[7] == 'FALSE'){
+                var flagpause = false
+            }
+            if (elem[8] == 'TRUE'){
+                var flagreduce = true
+            }
+            if (elem[8] == 'FALSE'){
+                var flagreduce = false
+            }
+            if (elem[9] == 'TRUE'){
+                var flaglock = true
+            }
+            if (elem[9] == 'FALSE'){
+                var flaglock = false
+            }
+            /*else {flagpause = false}*/
             dictionary[elem[0]] = {
                 'quantity': elem[1],
                 'addition': elem[2],
@@ -403,7 +420,9 @@
                 'stop': elem[4],
                 'trend': elem[5].toLocaleLowerCase(),
                 'once': flagonce,
-                'pause': flagpause
+                'pause': flagpause,
+                'reduce': flagreduce,
+                'lock': flaglock
             }
         }
 
@@ -437,7 +456,9 @@
                 'stop': stop,
                 'trend': trend,
                 'once': false,
-                'pause': false
+                'pause': false,
+                'reduce': false,
+                'lock': false
             }
         }
 
@@ -448,7 +469,9 @@
             'stop': stop,
             'trend': 'buy',
             'once': false,
-            'pause': false
+            'pause': false,
+            'reduce': false,
+            'lock': false
         }
         console.log(symbols)
         console.log(dictionary)
@@ -510,6 +533,8 @@
             div2.setAttribute('class', 'row-end');
             div3.setAttribute('class', 'check-box');
             div4.setAttribute('class', 'check-box');
+            div5.setAttribute('class', 'check-box');
+            div6.setAttribute('class', 'check-box');
 
             inputSymbol.setAttribute("class", "js-select2");
             inputSymbol.setAttribute("placeholder", "symbols");
@@ -561,6 +586,20 @@
             checkBoxPause.checked = dic_work[word]['pause'];
             label2.setAttribute("for", "form."+index+"-pause");
             label2.textContent = "pause";
+
+            checkBoxPause.setAttribute("id", "form."+index+"-reduce");
+            checkBoxPause.setAttribute("type", "checkbox");
+            checkBoxPause.setAttribute("name", "reduce");
+            checkBoxPause.checked = dic_work[word]['reduce'];
+            label2.setAttribute("for", "form."+index+"-reduce");
+            label2.textContent = "reduce";
+
+            checkBoxPause.setAttribute("id", "form."+index+"-lock");
+            checkBoxPause.setAttribute("type", "checkbox");
+            checkBoxPause.setAttribute("name", "lock");
+            checkBoxPause.checked = dic_work[word]['lock'];
+            label2.setAttribute("for", "form."+index+"-lock");
+            label2.textContent = "lock";
             /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
@@ -602,6 +641,12 @@
             div2.appendChild(div4);
             div4.appendChild(checkBoxPause);
             div4.appendChild(label2);
+            div2.appendChild(div5);
+            div5.appendChild(checkBoxReduce);
+            div5.appendChild(label2);
+            div2.appendChild(div6);
+            div6.appendChild(checkBoxLock);
+            div6.appendChild(label2);
             // form.appendChild(inputSymbol);
             // form.appendChild(inputQuantity);
             // form.appendChild(inputAditional);
@@ -610,6 +655,8 @@
             // form.appendChild(inputTrend);
             // form.appendChild(checkBoxOnce);
             // form.appendChild(checkBoxPause);
+            // form.appendChild(checkBoxReduce);
+            // form.appendChild(checkBoxLock);
             // form.appendChild(buttonSubmit);
             document.body.appendChild(form);
 
@@ -686,7 +733,9 @@
                 const trend = document.getElementById(set + "-trend").value;
                 const once = document.getElementById(set+"-once").checked;
                 const pause = document.getElementById(set+"-pause").checked;
-                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + '\n';
+                const reduce = document.getElementById(set+"-reduce").checked;
+                const lock = document.getElementById(set+"-lock").checked;
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce + ',' + lock +'\n';
             });
 
             tg.sendData(data);
