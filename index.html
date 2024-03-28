@@ -505,6 +505,8 @@
             div6 = document.createElement('div');
             label = document.createElement('label');
             label2 = document.createElement('label');
+            label23 = document.createElement('label');
+            label234 = document.createElement('label');
 
             for (let item_symbol in symbols) {
                 let option_symbol = document.createElement("option");
@@ -593,15 +595,15 @@
             checkBoxPause.setAttribute("type", "checkbox");
             checkBoxPause.setAttribute("name", "reduce");
             checkBoxPause.checked = dic_work[word]['reduce'];
-            label2.setAttribute("for", "form."+index+"-reduce");
-            label2.textContent = "reduce";
+            label23.setAttribute("for", "form."+index+"-reduce");
+            label23.textContent = "reduce";
 
             checkBoxPause.setAttribute("id", "form."+index+"-lock");
             checkBoxPause.setAttribute("type", "checkbox");
             checkBoxPause.setAttribute("name", "lock");
             checkBoxPause.checked = dic_work[word]['lock'];
-            label2.setAttribute("for", "form."+index+"-lock");
-            label2.textContent = "lock";
+            label234.setAttribute("for", "form."+index+"-lock");
+            label234.textContent = "lock";
             /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
@@ -645,10 +647,10 @@
             div4.appendChild(label2);
             div2.appendChild(div5);
             div5.appendChild(checkBoxReduce);
-            div5.appendChild(label2);
+            div5.appendChild(label23);
             div2.appendChild(div6);
             div6.appendChild(checkBoxLock);
-            div6.appendChild(label2);
+            div6.appendChild(label234);
             // form.appendChild(inputSymbol);
             // form.appendChild(inputQuantity);
             // form.appendChild(inputAditional);
@@ -737,7 +739,7 @@
                 const pause = document.getElementById(set+"-pause").checked;
                 const reduce = document.getElementById(set+"-reduce").checked;
                 const lock = document.getElementById(set+"-lock").checked;
-                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce + ',' + lock +'\n';
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce + ',' + lock + '\n';
             });
 
             tg.sendData(data);
