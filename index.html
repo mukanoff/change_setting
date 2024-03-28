@@ -344,8 +344,6 @@
         let stop;
         let once;
         let pause;
-        let reduce;
-        let lock;
         
 
         document.getElementById("connector").innerHTML = connector;
@@ -387,32 +385,23 @@
         }
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
-            if (elem[6] == 'NONE'){ 
-                var flagonce = true }
             if (elem[6] == 'TRUE'){ 
                 var flagonce = true }
             if (elem[6] == 'FALSE'){ 
                 var flagonce = false }
-            /*else {var flagonce = false}*/
+            else {var flagonce = false}*/
             if (elem[7] == 'TRUE'){
                 var flagpause = true
             }
-            if (elem[7] == 'FALSE'){
-                var flagpause = false
-            }
-            if (elem[8] == 'TRUE'){
-                var flagreduce = true
-            }
-            if (elem[8] == 'FALSE'){
-                var flagreduce = false
-            }
-            if (elem[9] == 'TRUE'){
-                var flaglock = true
-            }
-            if (elem[9] == 'FALSE'){
-                var flaglock = false
-            }
-            /*else {flagpause = false}*/
+            else {flagpause = false}
+            if (elem[8] == 'TRUE'){ 
+                var flagreduce = true }
+            else
+                {var flagreduce = false}
+            if (elem[9] == 'TRUE'){ 
+                var flaglock = true }
+            else
+                {var flaglock = false}
             dictionary[elem[0]] = {
                 'quantity': elem[1],
                 'addition': elem[2],
@@ -497,16 +486,19 @@
             buttonSubmit = document.createElement("button");
             checkBoxOnce =document.createElement("input");
             checkBoxPause =document.createElement("input");
+            checkBoxReduce = document.createElement("input");
+            checkBoxLock = document.createElement("input");
             div1 = document.createElement('div');
             div2 = document.createElement('div');
             div3 = document.createElement('div');
             div4 = document.createElement('div');
             div5 = document.createElement('div');
             div6 = document.createElement('div');
-            label = document.createElement('label');
-            label2 = document.createElement('label');
-            label23 = document.createElement('label');
-            label234 = document.createElement('label');
+            label_once = document.createElement('label');
+            label_pause = document.createElement('label');
+            label_reduce = document.createElement('label');
+            label_lock = document.createElement('label');
+            
 
             for (let item_symbol in symbols) {
                 let option_symbol = document.createElement("option");
@@ -545,7 +537,7 @@
             inputSymbol.setAttribute("name", index);
             inputSymbol.setAttribute("id", "form." + index + ".symbol");
 
-            inputTrend.setAttribute("name", index);
+            inputTrend.setAttribute("name", index);    
             inputTrend.setAttribute("id", "form." + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
@@ -581,29 +573,29 @@
             checkBoxOnce.setAttribute("type", "checkbox");
             checkBoxOnce.setAttribute("name", "once");
             checkBoxOnce.checked = dic_work[word]['once'];
-            label.setAttribute("for", "form."+index+"-once");
-            label.textContent = "once";
+            label_once.setAttribute("for", "form."+index+"-once");
+            label_once.textContent = "once";
 
             checkBoxPause.setAttribute("id", "form."+index+"-pause");
             checkBoxPause.setAttribute("type", "checkbox");
             checkBoxPause.setAttribute("name", "pause");
             checkBoxPause.checked = dic_work[word]['pause'];
-            label2.setAttribute("for", "form."+index+"-pause");
-            label2.textContent = "pause";
+            label_pause.setAttribute("for", "form."+index+"-pause");
+            label_pause.textContent = "pause";
 
             checkBoxReduce.setAttribute("id", "form."+index+"-reduce");
             checkBoxReduce.setAttribute("type", "checkbox");
             checkBoxReduce.setAttribute("name", "reduce");
             checkBoxReduce.checked = dic_work[word]['reduce'];
-            label23.setAttribute("for", "form."+index+"-reduce");
-            label23.textContent = "reduce";
-
+            label_reduce.setAttribute("for", "form."+index+"-reduce");
+            label_reduce.textContent = "reduce";
+            
             checkBoxLock.setAttribute("id", "form."+index+"-lock");
             checkBoxLock.setAttribute("type", "checkbox");
             checkBoxLock.setAttribute("name", "lock");
             checkBoxLock.checked = dic_work[word]['lock'];
-            label234.setAttribute("for", "form."+index+"-lock");
-            label234.textContent = "lock";
+            label_lock.setAttribute("for", "form."+index+"-lock");
+            label_lock.textContent = "lock";
             /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
@@ -641,16 +633,16 @@
             form.appendChild(div2);
             div2.appendChild(div3);
             div3.appendChild(checkBoxOnce);
-            div3.appendChild(label);
+            div3.appendChild(label_once);
             div2.appendChild(div4);
             div4.appendChild(checkBoxPause);
-            div4.appendChild(label2);
-            div2.appendChild(div5);
-            div5.appendChild(checkBoxReduce);
-            div5.appendChild(label23);
-            div2.appendChild(div6);
-            div6.appendChild(checkBoxLock);
-            div6.appendChild(label234);
+            div4.appendChild(label_pause);
+            form.appendChild(div5);
+            div4.appendChild(checkBoxReduce);
+            div4.appendChild(label_reduce);
+            form.appendChild(div6);
+            div4.appendChild(checkBoxLock);
+            div4.appendChild(label_lock);
             // form.appendChild(inputSymbol);
             // form.appendChild(inputQuantity);
             // form.appendChild(inputAditional);
@@ -659,8 +651,6 @@
             // form.appendChild(inputTrend);
             // form.appendChild(checkBoxOnce);
             // form.appendChild(checkBoxPause);
-            // form.appendChild(checkBoxReduce);
-            // form.appendChild(checkBoxLock);
             // form.appendChild(buttonSubmit);
             document.body.appendChild(form);
 
@@ -739,7 +729,7 @@
                 const pause = document.getElementById(set+"-pause").checked;
                 const reduce = document.getElementById(set+"-reduce").checked;
                 const lock = document.getElementById(set+"-lock").checked;
-                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce + ',' + lock + '\n';
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce +',' + lock + '\n';
             });
 
             tg.sendData(data);
@@ -755,10 +745,6 @@
 
         })
     </script>
-
-
-    
-   
 
 </body>
 </html>
