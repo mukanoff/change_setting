@@ -39,7 +39,7 @@
 
         #header_name {
             background-color: Gainsboro;
-            font-size: 13px;
+            font-size: 14px;  /*размер текста в строке с заголовками таблицы*/
         }
 
         input:focus {
@@ -53,7 +53,7 @@
             align-items: stretch;
             flex-direction: column;
             align-items: center;
-            *font-size: 15px;
+            font-size: 15px;
         }
 
         button {
@@ -72,11 +72,11 @@
             /*background: var(--tg-theme-button-color);*/
             /*color: var(--tg-theme-button-text-color);*/
             border: 0px solid #808080;
-            font-size: 15px;
+            font-size: 14px;    /*размер текста полей ввода */
             background-color: White;
-            min-width: 20px;
-            max-width: 38px;
-            width: auto;
+            /* min-width: 20px;
+            max-width: 38px; */
+            /* width: auto; */
         }
 
         select {
@@ -102,14 +102,62 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            font-size: 15px;
+            font-size: 14px;  /*размер текста в формах*/
             justify-content: space-between;
             padding: 0px;
             /*border: 1px solid #000;*/
             border-radius: 5px;
             box-shadow: 0 0 8px Plum;
             margin: 4px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 430px; /* максимальная длинна строки с инпутами*/
+        }
+      
+        .created-form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .row {
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            position: relative;
+        }
+        .row > * {
+            width: 15% !important; /*длинна колонок для всех элементов в строке с инпутами*/
+            text-align: left; /* положение элементов по левому краю в строке с инпутами*/
+           
+        }
+
+        .row-end {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            gap: 2%;
+            padding-right: 4%;
+        }
+
+        .row-end > * {
+            width: 15% !important; /*длинна колонок для всех элементов в строке с чекбоксами (once, pause)*/
+            text-align: left; /* положение элементов по левому краю в строке с чекбоксами*/
+           
+        }
+
+        .check-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+        .check-box label {
+            color: black;
+        }
+
+        .created-btn {
+           background-color: transparent;
+            cursor: pointer;
+            text-align: right;
         }
 
         form_header {
@@ -119,19 +167,94 @@
             flex-wrap: nowrap;
             display: flex;
             flex-direction: row;
+            /* gap: 2%; */
             align-items: left;
-            font-size: 19px;
-            justify-content: space-between;
+            font-size: 12px !important;
+            justify-content: start !important;
             padding: 0px;
             /*border: 1px solid #000;*/
             border-radius: 5px;
             box-shadow: 0 0 8px #C0C0C0;
             margin: 4px;
-            /*width: 100%;*/
-            max-width: 100%;
+            width: 100%;
+            /* max-width: 100%; */
             margin-top: 30px;
+             max-width: 430px;  /*максимальная длина строки с заголовками таблицы*/
         }
-    
+        form_header > * {
+            width: 15% !important; /* длина каждой колонки в строке с заголовками таблицы*/
+           text-align: center;
+           padding: 0;
+        }
+
+        form_header :nth-child(2) {
+            width: 14% !important; /* длина колонки 'vol' в строке с заголовками таблицы*/
+           text-align: center;
+           padding-left: 6%; /*отступ слева для колонки 'vol' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(3) {
+            width: 14% !important; /* длина колонки '%' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 7%;/*отступ слева для колонки '%' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(4) {
+            width: 20% !important; /* длина колонки 'take' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 5%; /*отступ слева для колонки 'take' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(5) {
+            width: 20% !important; /* длина колонки 'stop' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 3%; /*отступ слева для колонки 'stop' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(6) {
+            width: 20% !important; /* длина колонки 'trend' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 2%; /*отступ слева для колонки 'trend' в строке с заголовками таблицы*/
+        }
+        .header_name {
+            width: 33% !important; /* длина колонки 'symbol' в строке с заголовками таблицы*/
+            text-align: center;
+            
+        }
+
+        .row > :nth-child(2) {
+            width: 27% !important; /* длина колонки с символом пары в строке с инпутами*/
+            min-width: 27% !important; /* минимальная длина колонки с символом в строке с инпутами*/
+            max-width: 27% !important; /* максимальная длина колонки с символом в строке с инпутами*/
+        }
+        .row > :nth-child(3) {
+            margin-left: 1%;
+            width: 15% !important;/* длина колонки "vol" в строке с инпутами*/
+        }
+        .row > :nth-child(4) {
+            width: 14% !important; /* длина колонки "%" в строке с инпутами*/
+            max-width: 14% !important; /* максимальная длина колонки "%" в строке с инпутами*/
+            overflow: hidden;
+            padding-left: 0%; /* отступ слева колонки "%" в строке с инпутами*/
+        }
+        .row > :nth-child(5) {
+              max-width: 14% !important; /* максимальная длина колонки "take" в строке с инпутами*/
+            width: 14% !important; /* длина колонки "take" в строке с инпутами*/
+            overflow: hidden;
+            padding-left: 0%; /* отступ слева колонки "take" в строке с инпутами*/
+        }
+        .row > :nth-child(6) {            
+            padding-left: 2%; /* отступ слева колонки "stop" в строке с инпутами*/
+        }
+        .row > :nth-child(7) {              
+            padding-left: 2%; /* отступ слева колонки "trend" в строке с инпутами*/
+        }
+        .percent {
+            width: 10% !important;
+        }
+        .hidden-btn {
+            visibility: hidden;
+        }
+
+       
+
+        
     
     
         /* Это код настроек для SBS 
@@ -161,7 +284,7 @@
         <button name="trend" id="header_name">TREND</button>
         <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
         */
-    </form_header>
+    /* </form_header> */
     
     
     </style>
@@ -181,18 +304,19 @@
    
     
             
-    <form_header id="aaaaaaa" style="justify-content: space-evenly;">
-        <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
-        <button name="Symbol" id="header_name">SYMBOL</button>
-        <span style="margin: 0 6px;"></span><!-- added span with margin to create space between buttons -->
+    <form_header id="aaaaaaa" >
+        <!-- <span style="margin: 0 5px;"></span>added span with margin to create space between buttons -->
+        <button name="Symbol" id="header_name" class="header_name">SYMBOL</button>
+        <!-- <span style="margin: 0 6px;"></span>added span with margin to create space between buttons -->
         <button name="Vol" id="header_name">VOL</button>
-        <span id ="span2" style="margin: 0 8px;"></span><!-- added span with margin to create space between buttons -->
-        <button name="add" id="header_name">%</button>
-        <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
+        <!-- <span id ="span2" style="margin: 0 8px;"></span>added span with margin to create space between buttons -->
+        <button name="add" id="header_name" class="percent">%</button>
+        <!-- <span style="margin: 0 2px;"></span>added span with margin to create space between buttons -->
         <button name="take" id="header_name">TAKE</button>
         <button name="stop" id="header_name">STOP</button>
         <button name="trend" id="header_name">TREND</button>
-        <span style="margin: 0 16px;"></span><!-- added span with margin to create space between buttons -->
+        <button class="created-btn hidden-btn" id="form.3-button">❌</button>
+        <!-- <span style="margin: 0 16px;"></span>added span with margin to create space between buttons -->
     </form_header>
     <script>
         let tg = window.Telegram.WebApp;
@@ -218,6 +342,8 @@
         let min_qnty;
         let take;
         let stop;
+        let once;
+        let pause;
         
 
         document.getElementById("connector").innerHTML = connector;
@@ -259,12 +385,25 @@
         }
         for (var jj in dctnr) {
             var elem = dctnr[jj].split('-');
+            if (elem[6] == 'NONE'){ 
+                var flagonce = true }
+            if (elem[6] == 'TRUE'){ 
+                var flagonce = true }
+            if (elem[6] == 'FALSE'){ 
+                var flagonce = false }
+            /*else {var flagonce = false}*/
+            if (elem[7] == 'TRUE'){
+                var flagpause = true
+            }
+            else {flagpause = false}
             dictionary[elem[0]] = {
                 'quantity': elem[1],
                 'addition': elem[2],
                 'take': elem[3],
                 'stop': elem[4],
                 'trend': elem[5].toLocaleLowerCase(),
+                'once': flagonce,
+                'pause': flagpause
             }
         }
 
@@ -297,6 +436,8 @@
                 'take': take,
                 'stop': stop,
                 'trend': trend,
+                'once': false,
+                'pause': false
             }
         }
 
@@ -306,6 +447,8 @@
             'take': '2',
             'stop': stop,
             'trend': 'buy',
+            'once': false,
+            'pause': false
         }
         console.log(symbols)
         console.log(dictionary)
@@ -318,7 +461,7 @@
         let inputStop //= document.createElement("input");
         let inputTrend ///= document.createElement("select");
         let buttonSubmit //= document.createElement("button");
-
+        let checkBox //=document.createElement("checkbox")
         function create_form(word, dic_work, percent = 10) {
 
             form = document.createElement("form");
@@ -329,6 +472,14 @@
             inputStop = document.createElement("input");
             inputTrend = document.createElement("select");
             buttonSubmit = document.createElement("button");
+            checkBoxOnce =document.createElement("input");
+            checkBoxPause =document.createElement("input");
+            div1 = document.createElement('div');
+            div2 = document.createElement('div');
+            div3 = document.createElement('div');
+            div4 = document.createElement('div');
+            label = document.createElement('label');
+            label2 = document.createElement('label');
 
             for (let item_symbol in symbols) {
                 let option_symbol = document.createElement("option");
@@ -354,11 +505,18 @@
             }
 
             form.setAttribute("id", "form." + index);
+            form.setAttribute("class", "created-form");
+            div1.setAttribute('class', 'row');
+            div2.setAttribute('class', 'row-end');
+            div3.setAttribute('class', 'check-box');
+            div4.setAttribute('class', 'check-box');
+
             inputSymbol.setAttribute("class", "js-select2");
             inputSymbol.setAttribute("placeholder", "symbols");
             inputSymbol.setAttribute("name", index);
-            inputTrend.setAttribute("name", index);
             inputSymbol.setAttribute("id", "form." + index + ".symbol");
+
+            inputTrend.setAttribute("name", index);
             inputTrend.setAttribute("id", "form." + index + "-trend");
 
             inputQuantity.setAttribute("type", "text");
@@ -377,16 +535,32 @@
             inputAditional.setAttribute("name", "Aditional");
             inputAditional.setAttribute("value", dic_work[word]['addition'])
             inputAditional.setAttribute("size", "2");
+            inputAditional.setAttribute("maxlength", "6");
 
             inputTake.setAttribute("type", "text");
             inputTake.setAttribute("id", "form." + index + "-take");
             inputTake.setAttribute("name", "Take");
-            inputTake.setAttribute("value", dic_work[word]['take']) 
+            inputTake.setAttribute("value", dic_work[word]['take']);
             inputTake.setAttribute("size", "2");
+            inputTake.setAttribute("maxlength", "6");
 
             inputStop.setAttribute("type", "text");
             inputStop.setAttribute("id", "form." + index + "-stop");
             inputStop.setAttribute("name", "Stop");
+
+            checkBoxOnce.setAttribute("id", "form."+index+"-once");
+            checkBoxOnce.setAttribute("type", "checkbox");
+            checkBoxOnce.setAttribute("name", "once");
+            checkBoxOnce.checked = dic_work[word]['once'];
+            label.setAttribute("for", "form."+index+"-once");
+            label.textContent = "once";
+
+            checkBoxPause.setAttribute("id", "form."+index+"-pause");
+            checkBoxPause.setAttribute("type", "checkbox");
+            checkBoxPause.setAttribute("name", "pause");
+            checkBoxPause.checked = dic_work[word]['pause'];
+            label2.setAttribute("for", "form."+index+"-pause");
+            label2.textContent = "pause";
             /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
@@ -411,14 +585,32 @@
 
             buttonSubmit.innerHTML = "❌";
             buttonSubmit.setAttribute("id", "form." + index + "-button");
+            buttonSubmit.setAttribute("class", "created-btn");
 
-            form.appendChild(inputSymbol);
-            form.appendChild(inputQuantity);
-            form.appendChild(inputAditional);
-            form.appendChild(inputTake);
-            form.appendChild(inputStop);
-            form.appendChild(inputTrend);
-            form.appendChild(buttonSubmit);
+            form.appendChild(div1);
+            div1.appendChild(inputSymbol);
+            div1.appendChild(inputQuantity);
+            div1.appendChild(inputAditional);
+            div1.appendChild(inputTake);
+            div1.appendChild(inputStop);
+            div1.appendChild(inputTrend);
+            div1.appendChild(buttonSubmit);
+            form.appendChild(div2);
+            div2.appendChild(div3);
+            div3.appendChild(checkBoxOnce);
+            div3.appendChild(label);
+            div2.appendChild(div4);
+            div4.appendChild(checkBoxPause);
+            div4.appendChild(label2);
+            // form.appendChild(inputSymbol);
+            // form.appendChild(inputQuantity);
+            // form.appendChild(inputAditional);
+            // form.appendChild(inputTake);
+            // form.appendChild(inputStop);
+            // form.appendChild(inputTrend);
+            // form.appendChild(checkBoxOnce);
+            // form.appendChild(checkBoxPause);
+            // form.appendChild(buttonSubmit);
             document.body.appendChild(form);
 
             buttonSubmit.onclick = function (e) {
@@ -492,7 +684,9 @@
                 const take = document.getElementById(set + "-take").value;
                 const stop = document.getElementById(set + "-stop").value;
                 const trend = document.getElementById(set + "-trend").value;
-                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + '\n';
+                const once = document.getElementById(set+"-once").checked;
+                const pause = document.getElementById(set+"-pause").checked;
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + '\n';
             });
 
             tg.sendData(data);
@@ -508,6 +702,10 @@
 
         })
     </script>
+
+
+    
+   
 
 </body>
 </html>
