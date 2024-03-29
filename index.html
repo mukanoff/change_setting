@@ -133,6 +133,7 @@
         .row-end {
             width: 100%;
             display: flex;
+            flex-direction: row;
             justify-content: end;
             gap: 2%;
             padding-right: 4%;
@@ -158,6 +159,7 @@
            background-color: transparent;
             cursor: pointer;
             text-align: right;
+            margin-left: -5%; /* уменьшить ширину блока кнопки, чтобы слово "reverse" полностью влезало*/
         }
 
         form_header {
@@ -190,27 +192,27 @@
         form_header :nth-child(2) {
             width: 14% !important; /* длина колонки 'vol' в строке с заголовками таблицы*/
            text-align: center;
-           padding-left: 6%; /*отступ слева для колонки 'vol' в строке с заголовками таблицы*/
+           padding-left: 2%; /*отступ слева для колонки 'vol' в строке с заголовками таблицы*/
         }
         form_header :nth-child(3) {
             width: 14% !important; /* длина колонки '%' в строке с заголовками таблицы*/
            text-align: left;
-           padding-left: 7%;/*отступ слева для колонки '%' в строке с заголовками таблицы*/
+           padding-left: 6%;/*отступ слева для колонки '%' в строке с заголовками таблицы*/
         }
         form_header :nth-child(4) {
             width: 20% !important; /* длина колонки 'take' в строке с заголовками таблицы*/
            text-align: left;
-           padding-left: 5%; /*отступ слева для колонки 'take' в строке с заголовками таблицы*/
+           padding-left: 4%; /*отступ слева для колонки 'take' в строке с заголовками таблицы*/
         }
         form_header :nth-child(5) {
             width: 20% !important; /* длина колонки 'stop' в строке с заголовками таблицы*/
            text-align: left;
-           padding-left: 3%; /*отступ слева для колонки 'stop' в строке с заголовками таблицы*/
+           padding-left: 1%; /*отступ слева для колонки 'stop' в строке с заголовками таблицы*/
         }
         form_header :nth-child(6) {
             width: 20% !important; /* длина колонки 'trend' в строке с заголовками таблицы*/
            text-align: left;
-           padding-left: 2%; /*отступ слева для колонки 'trend' в строке с заголовками таблицы*/
+           padding-left: 0; /*отступ слева для колонки 'trend' в строке с заголовками таблицы*/
         }
         .header_name {
             width: 33% !important; /* длина колонки 'symbol' в строке с заголовками таблицы*/
@@ -244,6 +246,7 @@
         }
         .row > :nth-child(7) {              
             padding-left: 2%; /* отступ слева колонки "trend" в строке с инпутами*/
+             width: 20% !important; /* увеличить ширину колонки "trend" в строке с инпутами, чтобы слово "reverse" полностью влезало*/
         }
         .percent {
             width: 10% !important;
@@ -486,10 +489,10 @@
             buttonSubmit = document.createElement("button");
             checkBoxOnce =document.createElement("input");
             checkBoxPause =document.createElement("input");
-            var checkBoxReduce = document.createElement("input");
-            var checkBoxLock = document.createElement("input");
-            div1 = document.createElement('div');
-            div2 = document.createElement('div');
+            checkBoxReduce = document.createElement("input");
+            checkBoxLock = document.createElement("input");
+            row = document.createElement('div');
+            row2 = document.createElement('div');
             div3 = document.createElement('div');
             div4 = document.createElement('div');
             div5 = document.createElement('div');
@@ -525,8 +528,8 @@
 
             form.setAttribute("id", "form." + index);
             form.setAttribute("class", "created-form");
-            div1.setAttribute('class', 'row');
-            div2.setAttribute('class', 'row-end');
+            row.setAttribute('class', 'row');
+            row2.setAttribute('class', 'row-end');
             div3.setAttribute('class', 'check-box');
             div4.setAttribute('class', 'check-box');
             div5.setAttribute('class', 'check-box');
@@ -622,27 +625,27 @@
             buttonSubmit.setAttribute("id", "form." + index + "-button");
             buttonSubmit.setAttribute("class", "created-btn");
 
-            form.appendChild(div1);
-            div1.appendChild(inputSymbol);
-            div1.appendChild(inputQuantity);
-            div1.appendChild(inputAditional);
-            div1.appendChild(inputTake);
-            div1.appendChild(inputStop);
-            div1.appendChild(inputTrend);
-            div1.appendChild(buttonSubmit);
-            form.appendChild(div2);
-            div2.appendChild(div3);
+            form.appendChild(row);
+            row.appendChild(inputSymbol);
+            row.appendChild(inputQuantity);
+            row.appendChild(inputAditional);
+            row.appendChild(inputTake);
+            row.appendChild(inputStop);
+            row.appendChild(inputTrend);
+            row.appendChild(buttonSubmit);
+            form.appendChild(row2);
+            row2.appendChild(div3);
             div3.appendChild(checkBoxOnce);
             div3.appendChild(label_once);
-            div2.appendChild(div4);
+            row2.appendChild(div4);
             div4.appendChild(checkBoxPause);
             div4.appendChild(label_pause);
-            div2.appendChild(div5);
-            div4.appendChild(checkBoxReduce);
-            div4.appendChild(label_reduce);
-            div2.appendChild(div6);
-            div4.appendChild(checkBoxLock);
-            div4.appendChild(label_lock);
+            row2.appendChild(div5);
+            div5.appendChild(checkBoxReduce);
+            div5.appendChild(label_reduce);
+            row2.appendChild(div6);
+            div6.appendChild(checkBoxLock);
+            div6.appendChild(label_lock);
             // form.appendChild(inputSymbol);
             // form.appendChild(inputQuantity);
             // form.appendChild(inputAditional);
@@ -745,6 +748,8 @@
 
         })
     </script>
+
+
 
 </body>
 </html>
