@@ -429,13 +429,13 @@
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
-            addition = round_ten(elem[1] / 20);
+            addition = round_ten(elem[1] * 0.062);
             if (robot == 'Stepbystep') {
                 
-                take = round_ten(addition * 0.9);
-                if (addition < 1) {
-                    addition = 1.1;
-                    take = 1;
+                take = round_ten(addition * 0.95);
+                if (addition < 1.5) {
+                    addition = 1.5;
+                    take = 1.44;
                     stop = qnty;
                 };
             }
