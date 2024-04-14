@@ -359,7 +359,7 @@
         document.getElementById("robot").innerHTML = robot + ' Setup';
         document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
 
-        if (robot != 'Stepbystep' || robot != 'Reactor' ) {
+        if (robot != 'Stepbystep' && robot != 'Reactor' ) {
             var buttons = document.getElementsByTagName('button');
             for (var i = 0; i < buttons.length; i++) {
                 var button = buttons[i];
