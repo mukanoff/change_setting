@@ -359,7 +359,7 @@
         document.getElementById("robot").innerHTML = robot + ' Setup';
         document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
 
-        if (robot != 'Stepbystep') {
+        if (robot != 'Stepbystep' || robot != 'Reactor' ) {
             var buttons = document.getElementsByTagName('button');
             for (var i = 0; i < buttons.length; i++) {
                 var button = buttons[i];
@@ -430,7 +430,7 @@
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
             addition = round_ten(elem[1] * 0.058);
-            if (robot == 'Stepbystep') {
+            if (robot == 'Stepbystep' || robot == 'Reactor') {
                 
                 take = round_ten(addition * 0.95);
                 if (addition < 1.2) {
