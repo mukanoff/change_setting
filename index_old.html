@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <Link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <title>Настройки</title>
+    <style>
+
+        .select2-results__option {
+            color: black;            
+            font-size: 14px;
+        }
+
+        .select2 {
+            color: black;            
+            font-size: 13px;
+        }
+        .select2-search__field {
+            width: 80px;
+        }
+        
+        #auto_set {
+            background-color: #91c1ec;
+            border: 2px solid #808080;
+            border-radius: 5px;
+            width: 50px;
+            max-width: 50px;
+        }
+
+        #autoset {
+            background-color: #fed5fd;
+            border: 2px solid #808080;
+            border-radius: 5px;
+        }
+
+        #add {
+            background-color: #fed5fd;
+            border: 2px solid #808080;
+            border-radius: 5px;
+        }
+
+
+        #header_name {
+            background-color: Gainsboro;
+            font-size: 14px;  /*размер текста в строке с заголовками таблицы*/
+        }
+
+        input:focus {
+            border: 2px solid DarkGray;
+        }
+
+        body {
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        button {
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
+            border: none;
+            font-size: 15px;
+            width: auto;
+        }
+
+        input {
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
+            border: 0px solid #808080;
+            font-size: 14px;    /*размер текста полей ввода */
+            background-color: White;
+            /* min-width: 20px;
+            max-width: 38px; */
+            /* width: auto; */
+        }
+
+        select {
+            background: White;
+            color: Black;
+            /*background: var(--tg-theme-button-color);*/
+            /*color: var(--tg-theme-button-text-color);*/
+            border: none;
+            font-size: 15px;
+            min-width: 40px;
+            max-width: 105px;
+            width: auto;
+            -webkit-appearance: none;
+        }
+
+        
+
+        form {
+            color: var(--tg-theme-text-color);
+            background: White;
+            /*background: var(--tg-theme-bg-color);*/
+            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-size: 14px;  /*размер текста в формах*/
+            justify-content: space-between;
+            padding: 0px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px Plum;
+            margin: 4px;
+            width: 100%;
+            max-width: 430px; /* максимальная длинна строки с инпутами*/
+        }
+      
+        .created-form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .row {
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            position: relative;
+        }
+        .row > * {
+            width: 15% !important; /*длинна колонок для всех элементов в строке с инпутами*/
+            text-align: left; /* положение элементов по левому краю в строке с инпутами*/
+           
+        }
+
+        .row-end {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            gap: 2%;
+            padding-right: 4%;
+        }
+
+        .row-end > * {
+            width: 15% !important; /*длинна колонок для всех элементов в строке с чекбоксами (once, pause)*/
+            text-align: left; /* положение элементов по левому краю в строке с чекбоксами*/
+           
+        }
+
+        .check-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+        .check-box label {
+            color: black;
+        }
+
+        .created-btn {
+           background-color: transparent;
+            cursor: pointer;
+            text-align: right;
+            margin-left: -5%; /* уменьшить ширину блока кнопки, чтобы слово "reverse" полностью влезало*/
+        }
+
+        form_header {
+            color: Black;
+            background: Gainsboro;
+            /*background: var(--tg-theme-bg-color);*/
+            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            /* gap: 2%; */
+            align-items: left;
+            font-size: 12px !important;
+            justify-content: start !important;
+            padding: 0px;
+            /*border: 1px solid #000;*/
+            border-radius: 5px;
+            box-shadow: 0 0 8px #C0C0C0;
+            margin: 4px;
+            width: 100%;
+            /* max-width: 100%; */
+            margin-top: 30px;
+             max-width: 430px;  /*максимальная длина строки с заголовками таблицы*/
+        }
+        form_header > * {
+            width: 15% !important; /* длина каждой колонки в строке с заголовками таблицы*/
+           text-align: center;
+           padding: 0;
+        }
+
+        form_header :nth-child(2) {
+            width: 14% !important; /* длина колонки 'vol' в строке с заголовками таблицы*/
+           text-align: center;
+           padding-left: 2%; /*отступ слева для колонки 'vol' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(3) {
+            width: 14% !important; /* длина колонки '%' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 6%;/*отступ слева для колонки '%' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(4) {
+            width: 20% !important; /* длина колонки 'take' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 4%; /*отступ слева для колонки 'take' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(5) {
+            width: 20% !important; /* длина колонки 'stop' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 1%; /*отступ слева для колонки 'stop' в строке с заголовками таблицы*/
+        }
+        form_header :nth-child(6) {
+            width: 20% !important; /* длина колонки 'trend' в строке с заголовками таблицы*/
+           text-align: left;
+           padding-left: 0; /*отступ слева для колонки 'trend' в строке с заголовками таблицы*/
+        }
+        .header_name {
+            width: 33% !important; /* длина колонки 'symbol' в строке с заголовками таблицы*/
+            text-align: center;
+            
+        }
+
+        .row > :nth-child(2) {
+            width: 27% !important; /* длина колонки с символом пары в строке с инпутами*/
+            min-width: 27% !important; /* минимальная длина колонки с символом в строке с инпутами*/
+            max-width: 27% !important; /* максимальная длина колонки с символом в строке с инпутами*/
+        }
+        .row > :nth-child(3) {
+            margin-left: 1%;
+            width: 15% !important;/* длина колонки "vol" в строке с инпутами*/
+        }
+        .row > :nth-child(4) {
+            width: 14% !important; /* длина колонки "%" в строке с инпутами*/
+            max-width: 14% !important; /* максимальная длина колонки "%" в строке с инпутами*/
+            overflow: hidden;
+            padding-left: 0%; /* отступ слева колонки "%" в строке с инпутами*/
+        }
+        .row > :nth-child(5) {
+              max-width: 14% !important; /* максимальная длина колонки "take" в строке с инпутами*/
+            width: 14% !important; /* длина колонки "take" в строке с инпутами*/
+            overflow: hidden;
+            padding-left: 0%; /* отступ слева колонки "take" в строке с инпутами*/
+        }
+        .row > :nth-child(6) {            
+            padding-left: 2%; /* отступ слева колонки "stop" в строке с инпутами*/
+        }
+        .row > :nth-child(7) {              
+            padding-left: 2%; /* отступ слева колонки "trend" в строке с инпутами*/
+             width: 20% !important; /* увеличить ширину колонки "trend" в строке с инпутами, чтобы слово "reverse" полностью влезало*/
+        }
+        .percent {
+            width: 10% !important;
+        }
+        .hidden-btn {
+            visibility: hidden;
+        }
+
+       
+
+        
+    
+    
+        /* Это код настроек для SBS 
+        <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Symbol" id="header_name">SYMBOL</button>
+        <span style="margin: 0 6px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Vol" id="header_name">VOL</button>
+        <span id ="span2" style="margin: 0 8px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="add" id="header_name">%</button>
+        <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="take" id="header_name">TAKE</button>
+        <button name="stop" id="header_name">STOP</button>
+        <button name="trend" id="header_name">TREND</button>
+        <span style="margin: 0 16px;"></span><!-- added span with margin to create space between buttons -->
+        
+        А это для остальных
+        
+        <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Symbol" id="header_name">SYMBOL</button>
+        <span style="margin: 0 7px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="Vol" id="header_name">VOL</button>
+        <span id ="span2" style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="add" id="header_name">%</button>
+        <span style="margin: 0 0px;"></span><!-- added span with margin to create space between buttons -->
+        <button name="take" id="header_name">TAKE</button>
+        <button name="stop" id="header_name">STOP</button>
+        <button name="trend" id="header_name">TREND</button>
+        <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
+        */
+    /* </form_header> */
+    
+    
+    </style>
+</head>  
+<body>
+    <h1 id="connector"; style="margin-top:0; display:inline-block;">Binance</h1>
+    <h2 id="robot"; style="margin-top:0; display:inline-block;"> StepByStep Settings</h2>
+
+    <div>
+        <input type="text" id="auto_set" placeholder="1-15" />
+        <button name="autoset" id="autoset"><b>AutoSettings</b></button>
+        <span style="margin: 0 50px;"></span> <!-- added span with margin to create space between buttons -->
+        <button name="add" id="add"><b>Add NEW</b></button>
+
+
+    </div>
+   
+    
+            
+    <form_header id="aaaaaaa" >
+        <!-- <span style="margin: 0 5px;"></span>added span with margin to create space between buttons -->
+        <button name="Symbol" id="header_name" class="header_name">SYMBOL</button>
+        <!-- <span style="margin: 0 6px;"></span>added span with margin to create space between buttons -->
+        <button name="Vol" id="header_name">VOL</button>
+        <!-- <span id ="span2" style="margin: 0 8px;"></span>added span with margin to create space between buttons -->
+        <button name="add" id="header_name" class="percent">%</button>
+        <!-- <span style="margin: 0 2px;"></span>added span with margin to create space between buttons -->
+        <button name="take" id="header_name">TAKE</button>
+        <button name="stop" id="header_name">STOP</button>
+        <button name="trend" id="header_name">TREND</button>
+        <button class="created-btn hidden-btn" id="form.3-button">❌</button>
+        <!-- <span style="margin: 0 16px;"></span>added span with margin to create space between buttons -->
+    </form_header>
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.MainButton.text = "Отправить настройки";
+        tg.MainButton.textColor = "#000000";
+        tg.MainButton.color = "#4169E1";
+        tg.MainButton.show();
+        const urlParams = new URLSearchParams(window.location.search);
+        var dic_param1 = urlParams.get('set');
+        var dic_param2 = urlParams.get('scrn');
+        var connector = urlParams.get('c');
+        connector = connector[0].toLocaleUpperCase() + connector.slice(1)
+        var robot = urlParams.get('r');
+        robot = robot[0].toLocaleUpperCase() + robot.slice(1)
+        var balance = urlParams.get('b');
+        var dictionary = {};
+        let symbols = {};
+        let dctnr;
+        let dctnr2;
+        let qnty;
+        let index = 1;
+        let min_qnty;
+        let take;
+        let stop;
+        let once;
+        let pause;
+        
+
+        document.getElementById("connector").innerHTML = connector;
+        document.getElementById("connector").setAttribute("style", "margin-top:0; display:inline-block;");
+        document.getElementById("robot").innerHTML = robot + ' Setup';
+        document.getElementById("robot").setAttribute("style", "margin-top:0; display:inline-block;");
+
+        if (robot != 'Stepbystep' && robot != 'Reactor' ) {
+            var buttons = document.getElementsByTagName('button');
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                if (button.textContent == "%") { button.textContent = "TAKE" }
+                else if (button.textContent == "TAKE") {
+                    button.textContent = "STOP";
+                }
+                else if (button.textContent == "STOP") { button.textContent = "INTERVAL" }
+            }
+            
+        }
+
+        if (connector == 'Binance') { min_qnty = 8 }
+        else if (connector == 'Bybit') { min_qnty = 2 }
+        qnty = Math.round(balance * 0.1);
+
+        if (qnty < min_qnty) { qnty = min_qnty };
+
+
+
+        if (dic_param1 === null) {
+            dctnr = {};
+            dctnr2 = {};
+        } else {
+            dctnr = dic_param1.split('~');
+            dctnr2 = dic_param2.split('~');
+        }
+        function round_ten(number) {
+            number = Math.round(number * 100) / 100;
+            return number;
+        }
+        for (var jj in dctnr) {
+            var elem = dctnr[jj].split('-');
+            /*if (elem[6] == 'TRUE'){ 
+                var flagonce = true }
+            if (elem[6] == 'FALSE'){ 
+                var flagonce = false }
+            else {var flagonce = false}*/
+            if (elem[6] == 'TRUE'){
+                var flagonce = true
+            }
+            else {flagonce = false}            
+            if (elem[7] == 'TRUE'){
+                var flagpause = true
+            }
+            else {flagpause = false}
+            if (elem[8] == 'TRUE'){ 
+                var flagreduce = true }
+            else
+                {var flagreduce = false}
+            if (elem[9] == 'TRUE'){ 
+                var flaglock = true }
+            else
+                {var flaglock = false}
+            dictionary[elem[0]] = {
+                'quantity': elem[1],
+                'addition': elem[2],
+                'take': elem[3],
+                'stop': elem[4],
+                'trend': elem[5].toLocaleLowerCase(),
+                'once': flagonce,
+                'pause': flagpause,
+                'reduce': flagreduce,
+                'lock': flaglock
+            }
+        }
+
+        for (var jj in dctnr2) {
+            var elem = dctnr2[jj].split('-');
+            addition = round_ten(elem[1] * 0.058);
+            if (robot == 'Stepbystep' || robot == 'Reactor') {
+                
+                take = round_ten(addition * 0.95);
+                if (addition < 1.2) {
+                    addition = 1.2;
+                    take = 1.15;
+                    stop = qnty;
+                };
+            }
+            else {
+                take = addition * 2;
+                if (addition < 1) {
+                    addition = 1;
+                    take = 2;
+                    stop = 5
+
+                };
+            }
+            trend = elem[2].toLocaleLowerCase();
+            quantity = Math.round(balance * 0.1);
+            symbols[elem[0]] = {
+                'quantity': qnty,
+                'addition': addition,
+                'take': take,
+                'stop': stop,
+                'trend': trend,
+                'once': false,
+                'pause': false,
+                'reduce': false,
+                'lock': false
+            }
+        }
+
+        symbols[''] = {
+            'quantity': qnty,
+            'addition': '1',
+            'take': '2',
+            'stop': stop,
+            'trend': 'buy',
+            'once': false,
+            'pause': false,
+            'reduce': false,
+            'lock': false
+        }
+        console.log(symbols)
+        console.log(dictionary)
+        let trend_dic = ['buy', 'sell', 'reverse'];
+        let form 
+        let inputSymbol 
+        let inputQuantity //= document.createElement("input");
+        let inputAditional //= document.createElement("input");
+        let inputTake //= document.createElement("input");
+        let inputStop //= document.createElement("input");
+        let inputTrend ///= document.createElement("select");
+        let buttonSubmit //= document.createElement("button");
+        let checkBox //=document.createElement("checkbox")
+        function create_form(word, dic_work, percent = 10) {
+
+            form = document.createElement("form");
+            inputSymbol = document.createElement("select",);
+            inputQuantity = document.createElement("input");
+            inputAditional = document.createElement("input");
+            inputTake = document.createElement("input");
+            inputStop = document.createElement("input");
+            inputTrend = document.createElement("select");
+            buttonSubmit = document.createElement("button");
+            checkBoxOnce =document.createElement("input");
+            checkBoxPause =document.createElement("input");
+            checkBoxReduce = document.createElement("input");
+            checkBoxLock = document.createElement("input");
+            row = document.createElement('div');
+            row2 = document.createElement('div');
+            div3 = document.createElement('div');
+            div4 = document.createElement('div');
+            div5 = document.createElement('div');
+            div6 = document.createElement('div');
+            label_once = document.createElement('label');
+            label_pause = document.createElement('label');
+            label_reduce = document.createElement('label');
+            label_lock = document.createElement('label');
+            
+
+            for (let item_symbol in symbols) {
+                let option_symbol = document.createElement("option");
+
+                option_symbol.value = item_symbol;
+
+                if (item_symbol == word) {
+                    option_symbol.selected = true;
+                }
+                option_symbol.text = item_symbol;
+                inputSymbol.appendChild(option_symbol);
+            }
+
+            for (var item_trend in trend_dic) {
+                var option_trend = document.createElement("option");
+                if (dic_work[word]['trend'] === '') { }
+                if (trend_dic[item_trend] === dic_work[word]['trend']) {
+                    option_trend.selected = true
+                }
+                option_trend.value = trend_dic[item_trend];
+                option_trend.text = trend_dic[item_trend];
+                inputTrend.appendChild(option_trend);
+            }
+
+            form.setAttribute("id", "form." + index);
+            form.setAttribute("class", "created-form");
+            row.setAttribute('class', 'row');
+            row2.setAttribute('class', 'row-end');
+            div3.setAttribute('class', 'check-box');
+            div4.setAttribute('class', 'check-box');
+            div5.setAttribute('class', 'check-box');
+            div6.setAttribute('class', 'check-box');
+
+            inputSymbol.setAttribute("class", "js-select2");
+            inputSymbol.setAttribute("placeholder", "symbols");
+            inputSymbol.setAttribute("name", index);
+            inputSymbol.setAttribute("id", "form." + index + ".symbol");
+
+            inputTrend.setAttribute("name", index);    
+            inputTrend.setAttribute("id", "form." + index + "-trend");
+
+            inputQuantity.setAttribute("type", "text");
+            inputQuantity.setAttribute("id", "form." + index + "-quantity");
+            inputQuantity.setAttribute("name", "Quantity");
+            if (percent != 10) {
+                inputQuantity.setAttribute("value", Math.round(balance * percent / 100));
+            }
+            else {
+                inputQuantity.setAttribute("value", dic_work[word]['quantity']);
+            }
+            inputQuantity.setAttribute("size", "2");
+
+            inputAditional.setAttribute("type", "text");
+            inputAditional.setAttribute("id", "form." + index + "-aditional");
+            inputAditional.setAttribute("name", "Aditional");
+            inputAditional.setAttribute("value", dic_work[word]['addition'])
+            inputAditional.setAttribute("size", "2");
+            inputAditional.setAttribute("maxlength", "6");
+
+            inputTake.setAttribute("type", "text");
+            inputTake.setAttribute("id", "form." + index + "-take");
+            inputTake.setAttribute("name", "Take");
+            inputTake.setAttribute("value", dic_work[word]['take']);
+            inputTake.setAttribute("size", "2");
+            inputTake.setAttribute("maxlength", "6");
+
+            inputStop.setAttribute("type", "text");
+            inputStop.setAttribute("id", "form." + index + "-stop");
+            inputStop.setAttribute("name", "Stop");
+
+            checkBoxOnce.setAttribute("id", "form."+index+"-once");
+            checkBoxOnce.setAttribute("type", "checkbox");
+            checkBoxOnce.setAttribute("name", "once");
+            checkBoxOnce.checked = dic_work[word]['once'];
+            label_once.setAttribute("for", "form."+index+"-once");
+            label_once.textContent = "once";
+
+            checkBoxPause.setAttribute("id", "form."+index+"-pause");
+            checkBoxPause.setAttribute("type", "checkbox");
+            checkBoxPause.setAttribute("name", "pause");
+            checkBoxPause.checked = dic_work[word]['pause'];
+            label_pause.setAttribute("for", "form."+index+"-pause");
+            label_pause.textContent = "pause";
+
+            checkBoxReduce.setAttribute("id", "form."+index+"-reduce");
+            checkBoxReduce.setAttribute("type", "checkbox");
+            checkBoxReduce.setAttribute("name", "reduce");
+            checkBoxReduce.checked = dic_work[word]['reduce'];
+            label_reduce.setAttribute("for", "form."+index+"-reduce");
+            label_reduce.textContent = "reduce";
+            
+            checkBoxLock.setAttribute("id", "form."+index+"-lock");
+            checkBoxLock.setAttribute("type", "checkbox");
+            checkBoxLock.setAttribute("name", "lock");
+            checkBoxLock.checked = dic_work[word]['lock'];
+            label_lock.setAttribute("for", "form."+index+"-lock");
+            label_lock.textContent = "lock";
+            /*if (percent != 10) {
+                inputStop.setAttribute("value", Math.round(balance * percent / 100));
+            }
+            else {
+                inputStop.setAttribute("value", Math.round(dic_work[word]['quantity']));
+            }*/
+
+
+            if (percent !== 10) {
+                inputStop.setAttribute("value", Math.round(balance * percent / 100));
+            } else {
+                const stopValue = dic_work[word]['stop'];
+                if (!isNaN(stopValue) ) {
+                    inputStop.setAttribute("value", Math.round(stopValue));
+                } else {
+                    inputStop.setAttribute("value", Math.round(dic_work[word]['quantity']));
+                }
+            }
+            
+            inputStop.setAttribute("size", "2");
+
+
+            buttonSubmit.innerHTML = "❌";
+            buttonSubmit.setAttribute("id", "form." + index + "-button");
+            buttonSubmit.setAttribute("class", "created-btn");
+
+            form.appendChild(row);
+            row.appendChild(inputSymbol);
+            row.appendChild(inputQuantity);
+            row.appendChild(inputAditional);
+            row.appendChild(inputTake);
+            row.appendChild(inputStop);
+            row.appendChild(inputTrend);
+            row.appendChild(buttonSubmit);
+            form.appendChild(row2);
+            row2.appendChild(div3);
+            div3.appendChild(checkBoxOnce);
+            div3.appendChild(label_once);
+            row2.appendChild(div4);
+            div4.appendChild(checkBoxPause);
+            div4.appendChild(label_pause);
+            row2.appendChild(div5);
+            div5.appendChild(checkBoxReduce);
+            div5.appendChild(label_reduce);
+            row2.appendChild(div6);
+            div6.appendChild(checkBoxLock);
+            div6.appendChild(label_lock);
+            // form.appendChild(inputSymbol);
+            // form.appendChild(inputQuantity);
+            // form.appendChild(inputAditional);
+            // form.appendChild(inputTake);
+            // form.appendChild(inputStop);
+            // form.appendChild(inputTrend);
+            // form.appendChild(checkBoxOnce);
+            // form.appendChild(checkBoxPause);
+            // form.appendChild(buttonSubmit);
+            document.body.appendChild(form);
+
+            buttonSubmit.onclick = function (e) {
+                e.preventDefault();
+                const form = e.target.closest('form');
+
+                form.remove();
+            }
+
+            inputSymbol.onchange = async function (e) {
+                e.preventDefault();
+                symbol_work = e.target.id.split('.')[1];
+                word = document.getElementById(e.target.id).value;
+                document.getElementById("form." + symbol_work + "-aditional").value = symbols[word]['addition'];
+                document.getElementById("form." + symbol_work + "-take").value = symbols[word]['take'];
+                document.getElementById("form." + symbol_work + "-trend").value = symbols[word]['trend'];
+
+            }
+
+            index++;
+        }
+
+        for (var word in dictionary) {
+            create_form(word, dictionary)
+        }
+
+        add.onclick = function () {
+
+            create_form('', symbols)
+
+            $('.js-select2').select2({
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
+            });
+        }
+
+
+        autoset.onclick = function (e) {
+            let settings = document.getElementById('auto_set').value;
+            if (settings.includes(',')) {
+                mass = settings.split(',');
+                settings = mass[0];
+                percent = mass[1];
+            }
+            else {
+                percent = 10;
+            }
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.remove();
+            });
+            let i = 1;
+            for (let sym in symbols) {
+                i++
+                create_form(sym, symbols, percent);
+                if (i > (Number(settings))) { break };
+            }
+        }
+
+        Telegram.WebApp.onEvent('mainButtonClicked', function () {
+            const forms = document.querySelectorAll('form');
+            let data = '';
+
+            forms.forEach(form => {
+
+                const set = form.id;
+                const symbol = document.getElementById(set + ".symbol").value;
+                const quantity = document.getElementById(set + "-quantity").value;
+                const additional = document.getElementById(set + "-aditional").value;
+                const take = document.getElementById(set + "-take").value;
+                const stop = document.getElementById(set + "-stop").value;
+                const trend = document.getElementById(set + "-trend").value;
+                const once = document.getElementById(set+"-once").checked;
+                const pause = document.getElementById(set+"-pause").checked;
+                const reduce = document.getElementById(set+"-reduce").checked;
+                const lock = document.getElementById(set+"-lock").checked;
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce +',' + lock + '\n';
+            });
+
+            tg.sendData(data);
+        });
+
+        $(document).ready(function () {
+            $('.js-select2').select2({
+                placeholder: "Symbols",
+                maximumSelectionLength: 5,
+                language: "en"
+            });
+
+
+        })
+    </script>
+
+
+
+</body>
+</html>
