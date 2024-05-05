@@ -345,15 +345,15 @@
         tg.MainButton.textColor = "#000000";
         tg.MainButton.color = "#4169E1";
         tg.MainButton.show();
+        var connector = urlParams.get('c');
         const urlParams = new URLSearchParams(window.location.search); 
         var dic_param1 = urlParams.get('set');
         let xhr = new XMLHttpRequest();
         let method = 'GET';
-        let url = "https://mukanoff-telegramwebapps-133b.twc1.net/screener";
+        let url = `https://mukanoff-telegramwebapps-133b.twc1.net/screener?name=${connector}`;
         xhr.open(method, url, false);
         xhr.send()
         var dic_param2 = xhr.response; 
-        var connector = urlParams.get('c');
         connector = connector[0].toLocaleUpperCase() + connector.slice(1)
         var robot = urlParams.get('r');
         robot = robot[0].toLocaleUpperCase() + robot.slice(1)
