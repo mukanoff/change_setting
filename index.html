@@ -16,6 +16,14 @@
         .select2 {
             color: black;            
             font-size: 13px;
+            width: 27% !important; /* длина колонки с символом пары в строке с инпутами*/
+            min-width: 27% !important; /* минимальная длина колонки с символом в строке с инпутами*/
+            max-width: 27% !important; 
+        }
+        .js-select2 {
+            width: 27% !important; /* длина колонки с символом пары в строке с инпутами*/
+            min-width: 27% !important; /* минимальная длина колонки с символом в строке с инпутами*/
+            max-width: 27% !important; 
         }
         .select2-search__field {
             width: 80px;
@@ -137,10 +145,12 @@
 
         .row-end {
             width: 100%;
+
+            max-width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: end;
-            gap: 2%;
+            justify-content: space-around;
+            
             padding-right: 4%;
         }
 
@@ -224,8 +234,10 @@
             text-align: center;
             
         }
+     
 
-        .row > :nth-child(2) {
+       
+        .row > :nth-child(1) {
             width: 27% !important; /* длина колонки с символом пары в строке с инпутами*/
             min-width: 27% !important; /* минимальная длина колонки с символом в строке с инпутами*/
             max-width: 27% !important; /* максимальная длина колонки с символом в строке с инпутами*/
@@ -233,6 +245,7 @@
         .row > :nth-child(3) {
             margin-left: 1%;
             width: 15% !important;/* длина колонки "vol" в строке с инпутами*/
+            max-width: 15% !important;
         }
         .row > :nth-child(4) {
             width: 14% !important; /* длина колонки "%" в строке с инпутами*/
@@ -253,18 +266,18 @@
             padding-left: 2%; /* отступ слева колонки "trend" в строке с инпутами*/
              width: 20% !important; /* увеличить ширину колонки "trend" в строке с инпутами, чтобы слово "reverse" полностью влезало*/
         }
+        .volume {
+            margin-left: 1%;
+            width: 15% !important;/* длина колонки "vol" в строке с инпутами*/
+            max-width: 15% !important;
+        }
         .percent {
             width: 10% !important;
         }
         .hidden-btn {
             visibility: hidden;
         }
-
-       
-
-        
-    
-    
+  
         /* Это код настроек для SBS 
         <span style="margin: 0 5px;"></span><!-- added span with margin to create space between buttons -->
         <button name="Symbol" id="header_name">SYMBOL</button>
@@ -293,8 +306,7 @@
         <span style="margin: 0 2px;"></span><!-- added span with margin to create space between buttons -->
         */
     /* </form_header> */
-    
-    
+        
     </style>
 </head>  
 <body>
@@ -333,9 +345,14 @@
         tg.MainButton.textColor = "#000000";
         tg.MainButton.color = "#4169E1";
         tg.MainButton.show();
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search); 
         var dic_param1 = urlParams.get('set');
-        var dic_param2 = urlParams.get('scrn');
+        let xhr = new XMLHttpRequest();
+        let method = 'GET';
+        let url = "http://92.39.210.71:8000/screener";
+        xhr.open(method, url, false);
+        xhr.send()
+        var dic_param2 = xhr.response; 
         var connector = urlParams.get('c');
         connector = connector[0].toLocaleUpperCase() + connector.slice(1)
         var robot = urlParams.get('r');
@@ -385,7 +402,7 @@
             dctnr2 = {};
         } else {
             dctnr = dic_param1.split('~');
-            dctnr2 = dic_param2.split('~');
+            dctnr2 = dic_param2.slice(1,-1).split('~');
         }
         function round_ten(number) {
             number = Math.round(number * 100) / 100;
@@ -414,6 +431,10 @@
                 var flaglock = true }
             else
                 {var flaglock = false}
+            if (elem[10] == 'TRUE'){ 
+                var flagnonzero = true }
+            else
+                {var flagnonzero = false}
             dictionary[elem[0]] = {
                 'quantity': elem[1],
                 'addition': elem[2],
@@ -423,12 +444,14 @@
                 'once': flagonce,
                 'pause': flagpause,
                 'reduce': flagreduce,
-                'lock': flaglock
+                'lock': flaglock,
+                'nonzero': flagnonzero
             }
         }
 
         for (var jj in dctnr2) {
             var elem = dctnr2[jj].split('-');
+            if (elem.length < 3) {continue};
             addition = round_ten(elem[1] * 0.058);
             if (robot == 'Stepbystep' || robot == 'Reactor') {
                 
@@ -448,7 +471,7 @@
 
                 };
             }
-            trend = elem[2].toLocaleLowerCase();
+                trend = elem[2].toLocaleLowerCase();
             quantity = Math.round(balance * 0.1);
             symbols[elem[0]] = {
                 'quantity': qnty,
@@ -459,7 +482,8 @@
                 'once': false,
                 'pause': false,
                 'reduce': false,
-                'lock': false
+                'lock': false,
+                'nonzero': false
             }
         }
 
@@ -472,7 +496,8 @@
             'once': false,
             'pause': false,
             'reduce': false,
-            'lock': false
+            'lock': false,
+            'nonzero': false
         }
         console.log(symbols)
         console.log(dictionary)
@@ -500,16 +525,19 @@
             checkBoxPause =document.createElement("input");
             checkBoxReduce = document.createElement("input");
             checkBoxLock = document.createElement("input");
+            checkBoxNonzero = document.createElement("input");
             row = document.createElement('div');
             row2 = document.createElement('div');
             div3 = document.createElement('div');
             div4 = document.createElement('div');
             div5 = document.createElement('div');
             div6 = document.createElement('div');
+            div7 = document.createElement('div');
             label_once = document.createElement('label');
             label_pause = document.createElement('label');
             label_reduce = document.createElement('label');
             label_lock = document.createElement('label');
+            label_nonzero = document.createElement('label');
             
 
             for (let item_symbol in symbols) {
@@ -543,6 +571,8 @@
             div4.setAttribute('class', 'check-box');
             div5.setAttribute('class', 'check-box');
             div6.setAttribute('class', 'check-box');
+            div7.setAttribute('class', 'check-box');
+            
 
             inputSymbol.setAttribute("class", "js-select2");
             inputSymbol.setAttribute("placeholder", "symbols");
@@ -562,6 +592,7 @@
                 inputQuantity.setAttribute("value", dic_work[word]['quantity']);
             }
             inputQuantity.setAttribute("size", "2");
+            inputQuantity.setAttribute("class", "volume");
 
             inputAditional.setAttribute("type", "text");
             inputAditional.setAttribute("id", "form." + index + "-aditional");
@@ -608,6 +639,13 @@
             checkBoxLock.checked = dic_work[word]['lock'];
             label_lock.setAttribute("for", "form."+index+"-lock");
             label_lock.textContent = "lock";
+            
+            checkBoxNonzero.setAttribute("id", "form."+index+"-nonzero");
+            checkBoxNonzero.setAttribute("type", "checkbox");
+            checkBoxNonzero.setAttribute("name", "nonzero");
+            checkBoxNonzero.checked = dic_work[word]['nonzero'];
+            label_nonzero.setAttribute("for", "form."+index+"-nonzero");
+            label_nonzero.textContent = "nonzero";
             /*if (percent != 10) {
                 inputStop.setAttribute("value", Math.round(balance * percent / 100));
             }
@@ -655,6 +693,9 @@
             row2.appendChild(div6);
             div6.appendChild(checkBoxLock);
             div6.appendChild(label_lock);
+            row2.appendChild(div7);
+            div7.appendChild(checkBoxNonzero);
+            div7.appendChild(label_nonzero);
             // form.appendChild(inputSymbol);
             // form.appendChild(inputQuantity);
             // form.appendChild(inputAditional);
@@ -741,7 +782,8 @@
                 const pause = document.getElementById(set+"-pause").checked;
                 const reduce = document.getElementById(set+"-reduce").checked;
                 const lock = document.getElementById(set+"-lock").checked;
-                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce +',' + lock + '\n';
+                const nonzero = document.getElementById(set+"-nonzero").checked;
+                data += symbol + ',' + quantity + ',' + additional + ',' + take + ',' + stop + ',' + trend + ',' + once + ',' + pause + ',' + reduce +',' + lock + ',' + nonzero + '\n';
             });
 
             tg.sendData(data);
