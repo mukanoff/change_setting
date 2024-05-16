@@ -1,7 +1,7 @@
-var name = 'Мувыр';
+
 let xhr = new XMLHttpRequest();
 let method = 'GET';
-let url = `https://mukanoff-fastapi-64e8.twc1.net/Bitrix/productlist?data=''&name=${name}`;
+let url = `https://mukanoff-fastapi-64e8.twc1.net/Bitrix/productlist?data=''&name=Мувыр`;
 xhr.open(method, url, false);
 xhr.send()  
 var dic_events = JSON.parse(xhr.response); 
