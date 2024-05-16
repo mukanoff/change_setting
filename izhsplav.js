@@ -1,7 +1,7 @@
 var name = 'Мувыр';
 let xhr = new XMLHttpRequest();
 let method = 'GET';
-let url = `https://mukanoff-telegramwebapps-133b.twc1.net/Bitrix/productlist?data=''&name=${name}`;
+let url = `https://mukanoff-fastapi-64e8.twc1.net/Bitrix/productlist?data=''&name=${name}`;
 xhr.open(method, url, false);
 xhr.send()  
 var dic_events = JSON.parse(xhr.response); 
@@ -123,28 +123,27 @@ button_pay.onclick = async function (e){
         alert(result)
         let xhr = new XMLHttpRequest();
         let method = 'GET';
-        let url = `https://mukanoff-telegramwebapps-133b.twc1.net/api/users`;
+        let url = `https://mukanoff-fastapi-64e8.twc1.net/api/users`;
         xhr.open(method, url, false);
         xhr.send()  
-        var dic_events = JSON.parse(xhr.response); 
-        const response = await fetch("https://mukanoff-telegramwebapps-133b.twc1.net/api/users", {
-            method: "POST",
-            headers: { "Accept": "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify({
-                lidinfo: fio.value,
-                phone: phone.value,
-                mail : mail.value,
-                numberofseats : total_quantity.innerHTML,
-                transfer: trasfersum.innerHTML,
-                tent3 : tent3.value,
-                tent4: tent4.value
-            })
-        });
+        var response = JSON.parse(xhr.response); 
+        console.log(response)
+        // const response = await fetch("https://mukanoff-fastapi-64e8.twc1.net/api/users", {
+        //     method: "POST",
+        //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         lidinfo: fio.value,
+        //         phone: phone.value,
+        //         mail : mail.value,
+        //         numberofseats : total_quantity.innerHTML,
+        //         transfer: trasfersum.innerHTML,
+        //         tent3 : tent3.value,
+        //         tent4: tent4.value
+        //     })
+        // });
         if (response.ok === true) {
             const user = await response.json();
             console.log(user.message)}
-
-        
         else {
             const error = await response.json();
             console.log(error.message);}
