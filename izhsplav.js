@@ -1,8 +1,8 @@
 
 let xhr = new XMLHttpRequest();
 let method = 'GET';
-//let server = 'https://mukanoff-fastapi-64e8.twc1.net/';
-let server = 'http://0.0.0.0:8000/';
+let server = 'https://mukanoff-fastapi-64e8.twc1.net/';
+//let server = 'http://0.0.0.0:8000/';
 let url = `${server}Bitrix/productlist?data=''&name=Мувыр `;//`https://mukanoff-fastapi-64e8.twc1.net/Bitrix/productlist?data=''&name=Мувыр`;
 xhr.open(method, url, false);
 xhr.send()
