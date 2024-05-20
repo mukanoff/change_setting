@@ -113,7 +113,7 @@ button_pay.onclick = async function (e){
     phone = document.getElementById('phone');
     fio = document.getElementById('fio_input');
     mail = document.getElementById('email');
-    trasfersum = document.getElementById('transfer_sum')
+    trasferneed = document.getElementById('transfer_need')
 
     if (agreement.checked && term.checked){
         result = `Заказчик ${fio.value}  телефон ${phone.value}  e-mail ${mail.value}
@@ -121,13 +121,18 @@ button_pay.onclick = async function (e){
         Палатки3 ${tent3.value} Палатки4 ${tent4.value} 
         Итого ${total_sum.innerHTML}`;
         body = JSON.stringify({
-            lidinfo: fio.value,
+            lidfio: fio.value,
             phone: phone.value,
             mail : mail.value,
             numberofseats : total_quantity.innerHTML,
-            transfer: trasfersum.innerHTML,
+            adult_quantity : adult_quantity.value,
+            children15_quantity : children15_quantity.value,
+            children10_quantity : children10_quantity.value,
+            children3_quantity: children3_quantity.value, 
+            transfer: trasferneed.checked,
             tent3 : tent3.value,
-            tent4: tent4.value
+            tent4: tent4.value,
+            total_sum : total_sum.innerHTML
         })
         let xhr = new XMLHttpRequest();
         let method = 'POST';
@@ -169,7 +174,7 @@ button_pay.onclick = async function (e){
 
 tent3.onchange = async function(e){
     if ((Number(tent3.value)*3 + Number(tent4.value)*4) >Number(total_quantity.innerHTML)+Number(tent3.value)+Number(tent4.value)){
-        alert('ytkmpz!!!!!!!!!!!');
+        alert('Вы не можете выбрать такое количество палаток');
         tent3.value = 0;
     }
 }
@@ -177,6 +182,6 @@ tent3.onchange = async function(e){
 tent4.onchange = async function(e){
     if ((Number(tent3.value)*3 + Number(tent4.value)*4) >Number(total_quantity.innerHTML)+Number(tent3.value)+Number(tent4.value)){
         tent4.value = 0;
-        alert('ytkmpz!!!!!!!!!!!');
+        alert('Вы не можете выбрать такое количество палаток');
     }
 }
