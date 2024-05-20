@@ -117,8 +117,7 @@ button_pay.onclick = async function (e){
 
     if (agreement.checked && term.checked){
         result = `Заказчик ${fio.value}  телефон ${phone.value}  e-mail ${mail.value}
-        Число участников ${total_quantity.innerHTML} Трансфер ${trasfersum.innerHTML} 
-        Палатки3 ${tent3.value} Палатки4 ${tent4.value} 
+        Число участников ${total_quantity.innerHTML} Палатки3 ${tent3.value} Палатки4 ${tent4.value} 
         Итого ${total_sum.innerHTML}`;
         body = JSON.stringify({
             lidfio: fio.value,
@@ -140,7 +139,6 @@ button_pay.onclick = async function (e){
         xhr.open(method, url, false);
         xhr.setRequestHeader("Accept", "application/json");
         xhr.setRequestHeader("Content-Type", "application/json");
-        //xhr.bo
         xhr.send(body)  
         //var response = JSON.parse(xhr.response); 
         var response = xhr.response;
