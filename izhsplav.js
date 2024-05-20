@@ -116,7 +116,7 @@ button_pay.onclick = async function (e){
     trasferneed = document.getElementById('transfer_need')
 
     if (agreement.checked && term.checked){
-        result = `Заказчик ${fio.value}  телефон ${phone.value}  e-mail ${mail.value}
+        result = `Информация по заказу \n Заказчик ${fio.value}  телефон ${phone.value}  e-mail ${mail.value}
         Число участников ${total_quantity.innerHTML} Палатки3 ${tent3.value} Палатки4 ${tent4.value} 
         Итого ${total_sum.innerHTML}`;
         body = JSON.stringify({
